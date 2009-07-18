@@ -4,6 +4,6 @@ require 'arcserver/soap/map_server'
 
 module ArcServer
   class MapServer
-#    include ArcServer::UrlHelper
+    include UrlHelper
   end
 end
