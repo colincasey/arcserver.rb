@@ -1,0 +1,134 @@
+---
+symbol_image_defaults: &symbol_image_defaults
+  :image_data: 
+  :image_url: 
+  :image_height: 16
+  :image_width: 20
+  :image_dpi: 96
+transparent_color_defaults: &transparent_color_defaults
+  :use_windows_dithering: true
+  :alpha_value: 255
+  :red: 254
+  :green: 255
+  :blue: 255
+
+get_legend_info_result:
+  - :layer_id: 1
+    :name: Zoomed in
+    :legend_groups:
+      - :heading: 
+        :legend_classes:
+          - :label: 
+            :description: 
+            :symbol_image:
+              <<: *symbol_image_defaults
+              :image_data: |
+                iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA
+                R0lEQVR4nGP89/8/AzUBC4wR4O9PkckbNm5kZGBgYGCihmHIZrAgC8JsIdcwBgaoC6kJRg0cNXAw
+                GIiSU6iRBanuQkZqF18AsvET5O8fag8AAAAASUVORK5CYII=
+
+            :transparent_color:
+              <<: *transparent_color_defaults
+  - :layer_id: 2
+    :name: Zoomed out
+    :legend_groups:
+      - :heading: 
+        :legend_classes:
+          - :label: 
+            :description: 
+            :symbol_image:
+              <<: *symbol_image_defaults
+              :image_data: |
+                iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA
+                PklEQVR4nGP89/8/AzUBE1VNY2BgYIExAvz9KXbqho0bGVnQBcg1DOYgqnt51MBRA4elgShZjxr5
+                mZHaxRcATwAQChHiw9IAAAAASUVORK5CYII=
+
+            :transparent_color:
+              <<: *transparent_color_defaults
+  - :layer_id: 3
+    :name: Buildings
+    :legend_groups:
+    - :heading: 
+      :legend_classes:
+        - :label: 
+          :description: 
+          :symbol_image:
+            <<: *symbol_image_defaults
+            :image_data: |
+              iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA
+              NElEQVR4nGP89/8/AzUBE1VNY2BgYIExZtTVUeTUjKYmRgYGGrhw1MBRA0cNJAYwDvrSBgCGTgoZ
+              cGsDFQAAAABJRU5ErkJggg==
+
+          :transparent_color:
+            <<: *transparent_color_defaults
+  - :layer_id: 4
+    :name: Zoning
+    :legend_groups:
+      - :heading: 
+        :legend_classes:
+          - :label: Commercial
+            :description: 
+            :symbol_image:
+              <<: *symbol_image_defaults
+              :image_data: |
+                iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA
+                NElEQVR4nGP89/8/AzUBE1VNY2BgYIExXjAyUuRUif//GRkYaODCUQNHDRw1kBjAOOhLGwBbzgoZ
+                pkxTgAAAAABJRU5ErkJggg==
+
+            :transparent_color:
+              <<: *transparent_color_defaults
+          - :label: Industrial
+            :description: 
+            :symbol_image:
+              <<: *symbol_image_defaults
+              :image_data: |
+                iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA
+                NElEQVR4nGP89/8/AzUBE1VNY2BgYIEx2hhXUuTUqv/hjAwMNHDhqIGjBo4aSAxgHPSlDQBtTgoZ
+                vbcuLAAAAABJRU5ErkJggg==
+
+            :transparent_color:
+              <<: *transparent_color_defaults
+          - :label: Residential
+            :description: 
+            :symbol_image:
+              <<: *symbol_image_defaults
+              :image_data: |
+                iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA
+                NElEQVR4nGP89/8/AzUBE1VNY2BgYIExGBlKKHLqf4YeRgYGGrhw1MBRA0cNJAYwDvrSBgAaUgkZ
+                JEjqtwAAAABJRU5ErkJggg==
+
+            :transparent_color:
+              <<: *transparent_color_defaults          
+          - :label: Mixed use
+            :description: 
+            :symbol_image:
+              <<: *symbol_image_defaults
+              :image_data: |
+                iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA
+                NElEQVR4nGP89/8/AzUBE1VNY2BgYIExvuW5UORUrkl7GBkYaODCUQNHDRw1kBjAOOhLGwCLTgoZ
+                Ubp19QAAAABJRU5ErkJggg==
+
+            :transparent_color:
+              <<: *transparent_color_defaults
+          - :label: Parks and open space
+            :description: 
+            :symbol_image:
+              <<: *symbol_image_defaults
+              :image_data: |
+                iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA
+                OUlEQVR4nGP89/8/AzUBE1VNY2BgYIExGBkYKHLqfwYGRgYGGrhw1MBRA0cNJAbA8zIsL1IKqO5C
+                AJdcBiBRj7wXAAAAAElFTkSuQmCC
+
+            :transparent_color:
+              <<: *transparent_color_defaults
+          - :label: Rural
+            :description: 
+            :symbol_image:
+              <<: *symbol_image_defaults
+              :image_data: |
+                iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA
+                NElEQVR4nGP89/8/AzUBE1VNY2BgYIExus+lU+TUUqOZjAwMNHDhqIGjBo4aSAxgHPSlDQCRTgoZ
+                WZnonwAAAABJRU5ErkJggg==
+
+            :transparent_color:
+              <<: *transparent_color_defaults

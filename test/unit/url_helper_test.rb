@@ -1,6 +1,7 @@
+# encoding: utf-8
 require File.dirname(__FILE__) + '/../test_helper'
 
-class UrlHelperTest < Test::Unit::TestCase
+class ArcServer::UrlHelperTest < Test::Unit::TestCase
   include ArcServer::UrlHelper
 
   context "when given a rest service url" do
