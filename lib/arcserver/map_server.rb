@@ -15,8 +15,8 @@ module ArcServer
     def_delegators :rest_service, :export
 
     def initialize(url, opts = {})
-      @soap_service = opts[:soap_service] || SOAP::MapServer.new(url)
-      @rest_service = opts[:rest_service] || REST::MapServer.new(url)
+      @soap_service = opts[:soap_service] || SOAP::MapServer.new(to_rest(url))
+      @rest_service = opts[:rest_service] || REST::MapServer.new(to_soap(url))
     end
   end
 end
