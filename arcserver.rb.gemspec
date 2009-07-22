@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{arcserver.rb}
-  s.version = "0.0.0"
+  s.version = "0.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Colin Casey"]
-  s.date = %q{2009-07-17}
+  s.date = %q{2009-07-22}
   s.email = %q{casey.colin@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -19,7 +19,17 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
-     "test/test_helper.rb"
+     "arcserver.rb.gemspec",
+     "lib/arcserver.rb",
+     "lib/arcserver/map_server.rb",
+     "lib/arcserver/rest/map_server.rb",
+     "lib/arcserver/soap/map_server.rb",
+     "lib/arcserver/url_helper.rb",
+     "test/functional/soap/map_server_test.rb",
+     "test/functional/soap/portland_landbase_get_legend_info.yml",
+     "test/test_helper.rb",
+     "test/unit/map_server_test.rb",
+     "test/unit/url_helper_test.rb"
   ]
   s.homepage = %q{http://github.com/colincasey/arcserver.rb}
   s.rdoc_options = ["--charset=UTF-8"]
@@ -28,7 +38,9 @@ Gem::Specification.new do |s|
   s.summary = %q{TODO}
   s.test_files = [
     "test/test_helper.rb",
-     "test/arcserver_test.rb"
+     "test/functional/soap/map_server_test.rb",
+     "test/unit/url_helper_test.rb",
+     "test/unit/map_server_test.rb"
   ]
 
   if s.respond_to? :specification_version then
