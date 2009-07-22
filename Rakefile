@@ -5,7 +5,7 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "arcserver.rb"
-    gem.summary = %Q{TODO}
+    gem.summary = %Q{Library for accessing ESRI ArcServer REST and SOAP APIs.}
     gem.email = "casey.colin@gmail.com"
     gem.homepage = "http://github.com/colincasey/arcserver.rb"
     gem.authors = ["Colin Casey"]
