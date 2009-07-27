@@ -15,6 +15,8 @@ module ArcServer
     def_delegators :rest_service, :export
 
     def initialize(url, opts = {})
+      raise Exception, "#{url} is not a valid map server url" unless map_server?(url)
+
       @soap_service = opts[:soap_service] || SOAP::MapServer.new(to_rest(url))
       @rest_service = opts[:rest_service] || REST::MapServer.new(to_soap(url))
     end

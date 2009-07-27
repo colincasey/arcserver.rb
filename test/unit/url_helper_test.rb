@@ -43,4 +43,12 @@ class ArcServer::UrlHelperTest < Test::Unit::TestCase
       assert !soap_service?(rest_url)
     end
   end
+
+  should "recognize a valid map server url" do
+    assert map_server?('http://sampleserver1.arcgisonline.com/ArcGIS/services/Demographics/ESRI_Census_USA/MapServer')
+  end
+
+  should "recognize an invalid map server url" do
+    assert !map_server?('http://not.a.map/server/url')
+  end
 end
