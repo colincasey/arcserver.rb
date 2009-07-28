@@ -36,6 +36,18 @@ class ArcServer::SOAP::MapServerTest < Test::Unit::TestCase
         end
       end
     end
+
+    should "use the default map name when getting the legend info" do
+      legend_info = @service.get_legend_info
+      legend_info.each do |item|
+        layer_assertion = "assert_legend_info_result_layer_#{item[:layer_id]}".to_sym
+        if respond_to?(layer_assertion)
+          send(layer_assertion, item)
+        else
+          raise "no assertions set for legend info with layer_id=#{item[:layer_id]}"
+        end
+      end
+    end
   end
 
   # legend info assertion helpers

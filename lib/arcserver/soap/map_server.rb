@@ -26,7 +26,7 @@ module ArcServer
 
       def get_legend_info(args = {})
         response = invoke("ns:GetLegendInfo") do |message|
-          message.add "MapName", args[:map_name]
+          message.add "MapName", args[:map_name] || get_default_map_name
         end
         node = response.document.xpath('//tns:GetLegendInfoResponse/Result', ns).first
         parse_legend_info_result(node)
