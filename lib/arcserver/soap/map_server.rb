@@ -10,12 +10,11 @@ module ArcServer
       end
 
       def on_before_dispatch
-        self.class.instance_variable_set(:@uri, @soap_url)
+        self.class.endpoint(:uri => @soap_url, :version => 1)
       end
 
       def initialize(soap_url, protocol_version=2)
         @soap_url = soap_url
-        self.class.instance_variable_set(:@protocol_version, protocol_version)
       end
 
       def get_default_map_name

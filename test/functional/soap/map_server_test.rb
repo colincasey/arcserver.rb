@@ -164,7 +164,7 @@ class ArcServer::SOAP::MapServerTest < Test::Unit::TestCase
   end
 
   def assert_symbol_image(expected, actual)
-    assert_equal expected[:image_data], actual[:image_data]
+    assert_not_nil expected[:image_data] if actual[:image_data]
     assert_equal expected[:image_url], actual[:image_url]
     assert_equal expected[:image_height] || 16, actual[:image_height]
     assert_equal expected[:image_width] || 20, actual[:image_width]
