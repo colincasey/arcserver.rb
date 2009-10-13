@@ -9,10 +9,13 @@ begin
     gem.email = "casey.colin@gmail.com"
     gem.homepage = "http://github.com/colincasey/arcserver.rb"
     gem.authors = ["Colin Casey"]
-    gem.add_dependency('httparty')
-    gem.add_dependency('handsoap')
-    gem.add_dependency('nokogiri')
-    gem.add_dependency('httpclient')
+    gem.add_dependency('httparty', '>= 0.4.5')
+    gem.add_dependency('handsoap', '>= 1.1.0')
+    gem.add_dependency('nokogiri', '>= 1.3.3')
+    gem.add_dependency('httpclient', '>= 2.1.5')
+    gem.add_development_dependency('jeweler', '>= 1.2.1')
+    gem.add_development_dependency('shoulda', '>= 2.10.2')
+    gem.add_development_dependency('mocha', '>= 0.9.8')
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
 rescue LoadError
