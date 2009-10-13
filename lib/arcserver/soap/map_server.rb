@@ -23,8 +23,13 @@ module ArcServer
       end
 
       def get_legend_info(args = {})
+        image_return_type = args[:image_return_url] ? "esriImageReturnURL" : "esriImageReturnMimeData"
         response = invoke("ns:GetLegendInfo") do |message|
           message.add "MapName", args[:map_name] || get_default_map_name
+          message.add "ImageType" do |image_type|
+            image_type.add "ImageReturnType", image_return_type
+            image_type.add "ImageFormat", "esriImagePNG24"
+          end
         end
         node = response.document.xpath('//tns:GetLegendInfoResponse/Result', ns).first
         parse_legend_info_result(node)

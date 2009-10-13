@@ -25,12 +25,24 @@ class ArcServer::SOAP::MapServerTest < Test::Unit::TestCase
       assert_equal "Portland", @service.get_default_map_name
     end
 
-    should "get the legend info" do
+    should "get the legend info (returning image data)" do
       legend_info = @service.get_legend_info(:map_name => 'Portland')
       legend_info.each do |item|
         layer_assertion = "assert_legend_info_result_layer_#{item[:layer_id]}".to_sym
         if respond_to?(layer_assertion)
-          send(layer_assertion, item)
+          send(layer_assertion, item, :image_data)
+        else
+          raise "no assertions set for legend info with layer_id=#{item[:layer_id]}"
+        end
+      end
+    end
+
+    should "get the legend info (returning image urls)" do
+      legend_info = @service.get_legend_info(:map_name => 'Portland', :image_return_url => true)
+      legend_info.each do |item|
+        layer_assertion = "assert_legend_info_result_layer_#{item[:layer_id]}".to_sym
+        if respond_to?(layer_assertion)
+          send(layer_assertion, item, :image_url)
         else
           raise "no assertions set for legend info with layer_id=#{item[:layer_id]}"
         end
@@ -51,29 +63,30 @@ class ArcServer::SOAP::MapServerTest < Test::Unit::TestCase
   end
 
   # legend info assertion helpers
-  def assert_legend_info_result_layer_1(item)
+  def assert_legend_info_result_layer_1(item, image_return_type = :image_data)
     expected = {
       :layer_id => 1,
       :name => 'Zoomed in',
       :legend_groups => [{
           :legend_classes => [{
               :symbol_image => {
-                :image_data => "iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA\nR0lEQVR4nGP89/8/AzUBC4wR4O9PkckbNm5kZGBgYGCihmHIZrAgC8JsIdcwBgaoC6kJRg0cNXAw\nGIiSU6iRBanuQkZqF18AsvET5O8fag8AAAAASUVORK5CYII=\n"
+                :image_return_type => image_return_type
               }
             }]
         }]
     }
+
     assert_legend_info_result_layer(expected, item)
   end
 
-  def assert_legend_info_result_layer_2(item)
+  def assert_legend_info_result_layer_2(item, image_return_type = :image_data)
     expected = {
       :layer_id => 2,
       :name => 'Zoomed out',
       :legend_groups => [{
           :legend_classes => [{
               :symbol_image => {
-                :image_data => "iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA\nPklEQVR4nGP89/8/AzUBE1VNY2BgYIExAvz9KXbqho0bGVnQBcg1DOYgqnt51MBRA4elgShZjxr5\nmZHaxRcATwAQChHiw9IAAAAASUVORK5CYII=\n"
+                :image_return_type => image_return_type
               }
             }]
         }]
@@ -81,14 +94,14 @@ class ArcServer::SOAP::MapServerTest < Test::Unit::TestCase
     assert_legend_info_result_layer(expected, item)
   end
 
-  def assert_legend_info_result_layer_3(item)
+  def assert_legend_info_result_layer_3(item, image_return_type = :image_data)
     expected = {
       :layer_id => 3,
       :name => 'Buildings',
       :legend_groups => [{
           :legend_classes => [{
               :symbol_image => {
-                :image_data => "iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA\nNElEQVR4nGP89/8/AzUBE1VNY2BgYIExZtTVUeTUjKYmRgYGGrhw1MBRA0cNJAYwDvrSBgCGTgoZ\ncGsDFQAAAABJRU5ErkJggg==\n"
+                :image_return_type => image_return_type
               }
             }]
         }]
@@ -96,7 +109,7 @@ class ArcServer::SOAP::MapServerTest < Test::Unit::TestCase
     assert_legend_info_result_layer(expected, item)
   end
 
-  def assert_legend_info_result_layer_4(item)
+  def assert_legend_info_result_layer_4(item, image_return_type = :image_data)
     expected = {
       :layer_id => 4,
       :name => 'Zoning',
@@ -104,32 +117,32 @@ class ArcServer::SOAP::MapServerTest < Test::Unit::TestCase
           :legend_classes => [{
               :label => 'Commercial',
               :symbol_image => {
-                :image_data => "iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA\nNElEQVR4nGP89/8/AzUBE1VNY2BgYIExXjAyUuRUif//GRkYaODCUQNHDRw1kBjAOOhLGwBbzgoZ\npkxTgAAAAABJRU5ErkJggg==\n"
+                :image_return_type => image_return_type
               }
             }, {
               :label => 'Industrial',
               :symbol_image => {
-                :image_data => "iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA\nNElEQVR4nGP89/8/AzUBE1VNY2BgYIEx2hhXUuTUqv/hjAwMNHDhqIGjBo4aSAxgHPSlDQBtTgoZ\nvbcuLAAAAABJRU5ErkJggg==\n"
+                :image_return_type => image_return_type
               }
             }, {
               :label => 'Residential',
               :symbol_image => {
-                :image_data => "iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA\nNElEQVR4nGP89/8/AzUBE1VNY2BgYIExGBlKKHLqf4YeRgYGGrhw1MBRA0cNJAYwDvrSBgAaUgkZ\nJEjqtwAAAABJRU5ErkJggg==\n"
+                :image_return_type => image_return_type
               }
             }, {
               :label => 'Mixed use',
               :symbol_image => {
-                :image_data => "iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA\nNElEQVR4nGP89/8/AzUBE1VNY2BgYIExvuW5UORUrkl7GBkYaODCUQNHDRw1kBjAOOhLGwCLTgoZ\nUbp19QAAAABJRU5ErkJggg==\n"
+                :image_return_type => image_return_type
               }
             }, {
               :label => 'Parks and open space',
               :symbol_image => {
-                :image_data => "iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA\nOUlEQVR4nGP89/8/AzUBE1VNY2BgYIExGBkYKHLqfwYGRgYGGrhw1MBRA0cNJAbA8zIsL1IKqO5C\nAJdcBiBRj7wXAAAAAElFTkSuQmCC\n"
+                :image_return_type => image_return_type
               }
             }, {
               :label => 'Rural',
               :symbol_image => {
-                :image_data => "iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA\nNElEQVR4nGP89/8/AzUBE1VNY2BgYIExus+lU+TUUqOZjAwMNHDhqIGjBo4aSAxgHPSlDQCRTgoZ\nWZnonwAAAABJRU5ErkJggg==\n"
+                :image_return_type => image_return_type
               }
             }]
         }]
@@ -164,8 +177,7 @@ class ArcServer::SOAP::MapServerTest < Test::Unit::TestCase
   end
 
   def assert_symbol_image(expected, actual)
-    assert_not_nil expected[:image_data] if actual[:image_data]
-    assert_equal expected[:image_url], actual[:image_url]
+    assert_not_nil actual[expected[:image_return_type]]
     assert_equal expected[:image_height] || 16, actual[:image_height]
     assert_equal expected[:image_width] || 20, actual[:image_width]
     assert_equal expected[:image_dpi] || 96, actual[:image_dpi]
