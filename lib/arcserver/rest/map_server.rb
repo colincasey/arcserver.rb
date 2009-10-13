@@ -1,5 +1,4 @@
 # encoding: utf-8
-require 'httparty'
 
 module ArcServer
   module REST
