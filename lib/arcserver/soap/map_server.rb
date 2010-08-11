@@ -34,6 +34,37 @@ module ArcServer
         node = response.document.xpath('//tns:GetLegendInfoResponse/Result', ns).first
         parse_legend_info_result(node)
       end
+      
+      def get_legend_image(args={})
+      	
+      	li = get_legend_info()
+      	height,width = determine_legend_size(li)
+      	puts "Height = #{height}"
+      	legend = Magick::Image.new(width,height)
+		gc = Magick::Draw.new
+		#gc.font = "helvetica"
+		gc.stroke_antialias(false)
+		gc.text_antialias = false
+		gc.density = "96x96"
+		
+		y = 0
+		li.each do |l|
+			name= l[:name]
+			puts "Working on layer #{name}"
+			gc.text(10,y+=30, name)
+			gc.draw(legend)
+			y-=15
+			l_classes = l[:legend_groups][0][:legend_classes]
+			l_classes.each do |lc|
+				img2=Image.read_inline(lc[:symbol_image][:image_data])
+				legend.composite!(img2[0],20,y+=25,OverCompositeOp)
+				gc.text(50,y+14, lc[:label]) unless lc[:label].nil?
+				gc.draw(legend)
+			end	
+			y+=5
+		end
+		legend
+  	  end
 
       private
       def ns
@@ -83,6 +114,25 @@ module ArcServer
             :blue => xml_to_int(node, "./TransparentColor/Blue/text()")
           }
         }
+      end
+      
+      #Legend methods
+      def determine_legend_size(legend_info)
+      	wd = 250
+      	ht = legend_info.inject(0) do  |height, li|
+			l_classes = li[:legend_groups][0][:legend_classes]
+			l_classes.each do |lc|
+				
+				if lc[:label].length * 10 > wd
+					wd = lc[:label].length * 10
+				end
+				
+			end
+			height+= (20+(25* l_classes.length))
+			
+		end
+		puts ht
+		[ht + 20,wd]   	
       end
 
     end
