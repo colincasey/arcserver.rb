@@ -40,19 +40,18 @@ class ArcServer::MapServerTest < Test::Unit::TestCase
       @map_server.export
     end
   end
-  
-  context "A request to create legend image" do
-  	setup do
-  	  @mock_soap_service = mock
-      @map_server = ArcServer::SOAP::MapServer.new(
+  context "get_legend_image" do
+  	 setup do
+      @mock_soap_service = mock
+      @map_server = ArcServer::MapServer.new(
         'http://sampleserver1.arcgisonline.com/ArcGIS/services/Demographics/ESRI_Census_USA/MapServer',
         :soap_service => @mock_soap_service
       )
-  	end
-  	should "should call get_legend_info" do
-  	  @mock_soap_service.expects(:get_legend_info=>nil)
+    end
+  	should "call get_legend_image" do
+  	  @mock_soap_service.expects(:get_legend_image => nil)
   	  @map_server.get_legend_image
-	end	
-  end
-  
+  	end	
+  	
+  end  
 end

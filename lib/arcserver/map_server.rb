@@ -1,6 +1,7 @@
 # encoding: utf-8
 require 'arcserver/rest/map_server'
 require 'arcserver/soap/map_server'
+require 'arcserver/legend'
 require 'forwardable'
 
 module ArcServer
@@ -9,7 +10,7 @@ module ArcServer
     extend  Forwardable
 
     attr_reader    :soap_service
-    def_delegators :soap_service, :get_default_map_name, :get_legend_info
+    def_delegators :soap_service, :get_default_map_name, :get_legend_info, :get_legend_image
     
     attr_reader    :rest_service
     def_delegators :rest_service, :export
