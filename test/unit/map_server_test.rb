@@ -47,6 +47,7 @@ class ArcServer::MapServerTest < Test::Unit::TestCase
     end
 
     should "fail if optional dependency RMagick is not installed" do
+      Object.expects(:const_defined?).with("Magick").returns(false)
       @map_server.expects(:require).with('RMagick').raises(LoadError)
       assert_raise(ArcServer::ArcServerError) { @map_server.get_legend_image }
     end
