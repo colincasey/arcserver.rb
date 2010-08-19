@@ -40,18 +40,21 @@ class ArcServer::MapServerTest < Test::Unit::TestCase
       @map_server.export
     end
   end
-  context "get_legend_image" do
-  	 setup do
-      @mock_soap_service = mock
-      @map_server = ArcServer::MapServer.new(
-        'http://sampleserver1.arcgisonline.com/ArcGIS/services/Demographics/ESRI_Census_USA/MapServer',
-        :soap_service => @mock_soap_service
-      )
+
+  context "verify delegation of legend image creation to ArcServer::Util::LegendImage" do
+    setup do
+      @map_server = ArcServer::MapServer.new('http://sampleserver1.arcgisonline.com/ArcGIS/services/Demographics/ESRI_Census_USA/MapServer')
     end
-  	should "call get_legend_image" do
-  	  @mock_soap_service.expects(:get_legend_image => nil)
-  	  @map_server.get_legend_image
-  	end	
-  	
+
+    should "fail if optional dependency RMagick is not installed" do
+      @map_server.expects(:require).with('RMagick').raises(LoadError)
+      assert_raise(ArcServer::ArcServerError) { @map_server.get_legend_image }
+    end
+
+    should "forward get_legend_image to LegendImage" do
+      mock_legend_image = mock { expects(:get_image) }
+      ArcServer::Util::LegendImage.expects(:new).with(@map_server).returns(mock_legend_image)
+      @map_server.get_legend_image
+    end
   end  
 end

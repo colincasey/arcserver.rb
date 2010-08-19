@@ -34,16 +34,6 @@ module ArcServer
         node = response.document.xpath('//tns:GetLegendInfoResponse/Result', ns).first
         parse_legend_info_result(node)
       end
-      
-      def get_legend_image(args={})
-      	
-      	if @legend.nil?
-      		legend_info = get_legend_info
-      		@legend = ArcServer::Legend.new(legend_info)
-  		end
-  		#TODO:  Cache this?
-      	@legend.get_image		
-  	  end
 
       private
       def ns
