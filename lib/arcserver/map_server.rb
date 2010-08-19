@@ -30,7 +30,7 @@ module ArcServer
     # @return [Magick::Image] the legend as an RMagick Image object
     def get_legend_image
        begin
-         require 'RMagick'
+         require 'RMagick' unless Object.const_defined?("Magick")
        rescue LoadError
          raise ArcServerError, "#{self.class}#get_legend_image needs an optional dependency 'RMagick [>= 2.13.1]' to be installed - try `gem install rmagick`"
        end
