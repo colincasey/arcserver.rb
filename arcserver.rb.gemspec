@@ -37,6 +37,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<httpclient>, [">= 2.1.5"])
       s.add_development_dependency(%q<shoulda>, [">= 2.10.2"])
       s.add_development_dependency(%q<mocha>, [">= 0.9.8"])
+      s.add_development_dependency(%q<rmagick>, [">= 2.13.1"])
     else
       s.add_dependency(%q<httparty>, [">= 0.4.5"])
       s.add_dependency(%q<handsoap>, [">= 1.1.0"])
@@ -44,6 +45,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<httpclient>, [">= 2.1.5"])
       s.add_dependency(%q<shoulda>, [">= 2.10.2"])
       s.add_dependency(%q<mocha>, [">= 0.9.8"])
+      s.add_dependency(%q<rmagick>, [">= 2.13.1"])
     end
   else
     s.add_dependency(%q<httparty>, [">= 0.4.5"])
@@ -52,5 +54,6 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<httpclient>, [">= 2.1.5"])
     s.add_dependency(%q<shoulda>, [">= 2.10.2"])
     s.add_dependency(%q<mocha>, [">= 0.9.8"])
+    s.add_dependency(%q<rmagick>, [">= 2.13.1"])
   end
 end
