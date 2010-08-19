@@ -27,8 +27,8 @@ module ArcServer
 
           legend_classes = legend[:legend_groups][0][:legend_classes]
           legend_classes.each do |legend_class|
-            img = Magick::Image.read_inline(legend_class[:symbol_image][:image_data])
-            legend_image.composite!(img[0], 20, y+=25, Magick::OverCompositeOp)
+            img = Magick::Image.read_inline(legend_class[:symbol_image][:image_data]).first
+            legend_image.composite!(img, 20, y+=25, Magick::OverCompositeOp)
             gc.text(50, y+14, legend_class[:label]) unless legend_class[:label].nil?
             gc.draw(legend_image)
             img.destroy!

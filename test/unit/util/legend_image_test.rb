@@ -14,7 +14,7 @@ class ArcServer::Util::LegendImageTest < Test::Unit::TestCase
       @legend = ArcServer::Util::LegendImage.new(map_server)
 
       mock_symbol_image = mock('symbol_image') do
-        expects(:[]).times(3).returns(self)
+        expects(:first).times(3).returns(self)
         expects(:destroy!).times(3)
       end
       Magick::Image.expects(:read_inline).with("AAA").returns(mock_symbol_image)
