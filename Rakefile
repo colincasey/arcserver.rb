@@ -5,13 +5,26 @@ require 'rake/rdoctask'
 require 'fileutils'
 require 'arcserver/version'
 
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/*_test.rb'
-  test.verbose = true
-end
+desc "Run all tests"
+task :test => ["test:unit", "test:functional"]
 
 task :default => :test
+
+namespace :test do
+  desc "Run unit tests"
+  Rake::TestTask.new(:unit) do |test|
+    test.libs << 'lib' << 'test'
+    test.pattern = 'test/unit/**/*_test.rb'
+    test.verbose = true
+  end
+
+  desc "Run functional tests"
+  Rake::TestTask.new(:functional) do |test|
+    test.libs << 'lib' << 'test'
+    test.pattern = 'test/functional/**/*_test.rb'
+    test.verbose = true
+  end
+end
 
 Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
