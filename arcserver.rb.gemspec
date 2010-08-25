@@ -11,8 +11,8 @@ Gem::Specification.new do |s|
   s.date = "2010-08-18"
   s.email = ["casey.colin@gmail.com"]
   s.homepage = "http://github.com/colincasey/arcserver.rb"
-  s.summary = "Library for accessing ESRI ArcServer REST and SOAP APIs."
-  s.description = "arcserver.rb is a utility for accessing ESRI ArcServer REST and SOAP APIs from a unified interface"
+  s.summary = "A library for accessing ESRI ArcServer REST and SOAP APIs from a unified interface"
+  s.description = "A library for accessing ESRI ArcServer REST and SOAP APIs from a unified interface"
 
   s.files = Dir.glob("{lib}/**/*") + %w(LICENSE README.rdoc Rakefile)
   s.test_files = Dir.glob("{test}/**/*")

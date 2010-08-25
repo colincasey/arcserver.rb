@@ -33,6 +33,7 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
+desc "Build arcserver.rb gem"
 task :build do
   system "gem build arcserver.rb.gemspec"
 
@@ -44,6 +45,7 @@ task :build do
   FileUtils.mv(gem_file_name, pkg_dir)
 end
 
+desc "Release arcserver.rb gem"
 task :release => :build do
   system "gem push pkg/arcserver.rb-#{ArcServer::VERSION}"
 end
