@@ -1,5 +1,5 @@
 # encoding: utf-8
-require File.dirname(__FILE__) + '/../test_helper'
+require File.expand_path("../../test_helper", __FILE__)
 
 class ArcServer::MapServerTest < Test::Unit::TestCase
   should "raise an error if the required url is not a map server url" do

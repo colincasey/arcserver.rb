@@ -37,7 +37,7 @@ module ArcServer
 
       private
       def ns
-        { 'tns', 'http://www.esri.com/schemas/ArcGIS/9.3' }
+        { 'tns' => 'http://www.esri.com/schemas/ArcGIS/9.3' }
       end
 
       # helpers
