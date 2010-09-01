@@ -25,14 +25,14 @@ module ArcServer
     end
 
     # Utility method for generating a legend image
-    # (requires optional dependency, RMagick [>= 2.13.1], to be installed)
+    # (requires optional dependency, RMagick [>= 2.12.0], to be installed)
     #
     # @return [Magick::Image] the legend as an RMagick Image object
     def get_legend_image
        begin
          require 'RMagick' unless Object.const_defined?("Magick")
        rescue LoadError
-         raise ArcServerError, "#{self.class}#get_legend_image needs an optional dependency 'RMagick [>= 2.13.1]' to be installed - try `gem install rmagick`"
+         raise ArcServerError, "#{self.class}#get_legend_image needs an optional dependency 'RMagick [>= 2.12.0]' to be installed - try `gem install rmagick`"
        end
        Util::LegendImage.new(self).get_image
     end

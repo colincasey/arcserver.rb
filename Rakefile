@@ -33,6 +33,16 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
+
+begin
+  require 'yard'
+  YARD::Rake::YardocTask.new do |t|
+    t.files   = ['lib/**/*.rb']
+  end
+rescue LoadError
+
+end
+
 desc "Build arcserver.rb gem"
 task :build do
   system "gem build arcserver.rb.gemspec"
