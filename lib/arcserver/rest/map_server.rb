@@ -51,7 +51,9 @@ module ArcServer
       # The REST url of a map service 
       attr_reader :url
 
-
+      # @param [String] url the REST url of a map service
+      # @example
+      #   ArcServer::MapServer.new("http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_StateCityHighway_USA/MapServer")
       def initialize(url)
         @url = url
       end
