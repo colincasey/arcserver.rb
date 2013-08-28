@@ -1,7 +1,6 @@
 $LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
 require 'rake'
 require 'rake/testtask'
-require 'rake/rdoctask'
 require 'fileutils'
 require 'arcserver/version'
 
@@ -25,14 +24,6 @@ namespace :test do
     test.verbose = true
   end
 end
-
-Rake::RDocTask.new do |rdoc|
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "arcserver.rb #{ArcServer::VERSION}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
-end
-
 
 begin
   require 'yard'

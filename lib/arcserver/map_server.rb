@@ -1,8 +1,4 @@
 # encoding: utf-8
-require 'arcserver/rest/map_server'
-require 'arcserver/soap/map_server'
-require 'arcserver/util/legend_image'
-require 'forwardable'
 
 module ArcServer
   class ArcServerError < StandardError; end
@@ -19,8 +15,6 @@ module ArcServer
 
     def initialize(url, opts = {})
       raise Exception, "#{url} is not a valid map server url" unless map_server?(url)
-
-      @soap_service = opts[:soap_service] || SOAP::MapServer.new(to_soap(url))
       @rest_service = opts[:rest_service] || REST::MapServer.new(to_rest(url))
     end
 
