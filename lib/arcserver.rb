@@ -7,11 +7,13 @@ require 'active_record'
 require 'arcserver/version'
 require 'arcserver/url_helper'
 require 'arcserver/map_server'
+require 'arcserver/feature_server'
 
 require 'arcserver/graphics/feature_set'
 require 'arcserver/graphics/feature'
 
 require 'arcserver/rest/map_server'
+require 'arcserver/rest/feature_server'
 require 'arcserver/rest/query'
 
 # relative_load_paths = %w[ arcserver ]

@@ -26,7 +26,7 @@ class ArcServer::MapServerTest < Test::Unit::TestCase
     end
   end
 
-  context "verifying delegation of actions to the REST service" do
+  context "verifying delegation of actions to the rest service" do
     setup do
       @mock_rest_service = mock
       @map_server = ArcServer::MapServer.new(

@@ -4,11 +4,12 @@ module ArcServer
 
       include ActiveModel::Dirty
 
-      attr_accessor :geometry, :attributes
+      attr_accessor :attributes
+      # attr_accessor :geometry, :attributes
 
       def initialize(attr={})
-        @geometry, @attributes = attr['geometry'], attr['attributes']
-        @attributes = attr['attributes']
+        # @geometry = attr[:geometry] || { }
+        @attributes = attr[:attributes] || { }
       end
 
 	  end
