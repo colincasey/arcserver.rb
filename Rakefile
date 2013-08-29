@@ -1,29 +1,12 @@
 $LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
 require 'rake'
-require 'rake/testtask'
+require 'rspec/core/rake_task'
 require 'fileutils'
 require 'arcserver/version'
 
-desc "Run all tests"
-task :test => ["test:unit", "test:functional"]
+task :default => :spec
 
-task :default => :test
-
-namespace :test do
-  desc "Run unit tests"
-  Rake::TestTask.new(:unit) do |test|
-    test.libs << 'lib' << 'test'
-    test.pattern = 'test/unit/**/*_test.rb'
-    test.verbose = true
-  end
-
-  desc "Run functional tests"
-  Rake::TestTask.new(:functional) do |test|
-    test.libs << 'lib' << 'test'
-    test.pattern = 'test/functional/**/*_test.rb'
-    test.verbose = true
-  end
-end
+RSpec::Core::RakeTask.new('spec')
 
 begin
   require 'yard'
