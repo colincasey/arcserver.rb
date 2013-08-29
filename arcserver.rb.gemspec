@@ -23,11 +23,14 @@ Gem::Specification.new do |s|
   ]
 
   s.require_paths = %w[lib]
-	s.add_runtime_dependency('httparty')
+  s.add_runtime_dependency('activesupport')
+  s.add_runtime_dependency('activerecord')
+  s.add_runtime_dependency('httparty')
 	s.add_runtime_dependency('nokogiri')
 	s.add_runtime_dependency('httpclient')
 	
 	s.add_development_dependency('shoulda')
 	s.add_development_dependency('mocha')
+  s.add_development_dependency('sdoc')
 
 end

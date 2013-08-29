@@ -7,9 +7,6 @@ module ArcServer
     include UrlHelper
     extend  Forwardable
 
-    attr_reader    :soap_service
-    def_delegators :soap_service, :get_default_map_name, :get_legend_info, :get_legend_image
-    
     attr_reader    :rest_service
     def_delegators :rest_service, :export
 

@@ -50,4 +50,3 @@ desc "Release arcserver.rb gem"
 task :release => :build do
   system "gem push pkg/arcserver.rb-#{ArcServer::VERSION}"
 end
-

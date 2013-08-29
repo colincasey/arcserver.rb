@@ -1,16 +1,16 @@
 module ArcServer
 	module Graphics
-	
-		attr_accessor :geometry, :attributes
-		
-		def initialize(attr={})
-			@geometry = {}.merge(attr['geometry'])
-			@attributes = {}.merge(attr['attributes'])
-		end
-		
-		def to_json
-			ActiveSupport::JSON.encode( { attributes: @attributes } )
-		end	
-	
+    class Feature
+
+      include ActiveModel::Dirty
+
+      attr_accessor :geometry, :attributes
+
+      def initialize(attr={})
+        @geometry, @attributes = attr['geometry'], attr['attributes']
+        @attributes = attr['attributes']
+      end
+
+	  end
 	end
 end
