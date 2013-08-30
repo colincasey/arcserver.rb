@@ -18,18 +18,18 @@ Connect to a map server instance using either its REST url
 
     map_server = ArcServer::MapServer.new('http://sampleserver1.arcgisonline.com/ArcGIS/services/Portland/ESRI_LandBase_WebMercator/MapServer')
 
-and export an image using the REST
+and export an image 
 
     puts map_server.export
 
-Query for retreive some features in a FeatureSet
+Query for retreive some features, the result will be a FeatureSet, which is a wrapper for the layer information and the features found
 
     query = ArcServer::REST::Query.new({ where: "district='4'", outFields: "*" })
     feature_set = query.execute("http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/SanFrancisco/311Incidents/FeatureServer/0")
 
     puts feature_set.features
 
-Feature are a single class with Geometry and attributes, create a feature is easy
+A feature is a simple class with Geometry and attributes, create one is easy
 
     f = ArcServer::Graphics::Feature.new({ geometry: { x: 997986.5006082746, y: 5783631.06234916, spatialReference: { wkid: 102100 }}, attributes: {status:1,req_id:"12345",req_type:"Graffiti Complaint – Private Property",req_date:"30.09.2013",req_time:"14:00",address:"via dei matti 0",district:"4"} })
 
@@ -39,7 +39,7 @@ Once you have your feature, it's ready to be saved on a feature layer
 
     results = fs.applyEdits([ f ], [ ], [  ]) # adds, updates, deletes
 
-You can simply edit a feature if you have an objectid
+You can simply edit a feature if you have an objectId, maybe retrieved with a Query
 
     f = ArcServer::Graphics::Feature.new({ attributes: { objectId:12345,address:"via dei matti 0",district:"4"} })
 
