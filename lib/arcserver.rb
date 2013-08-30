@@ -1,8 +1,10 @@
 # encoding: utf-8
+
 require 'httparty'
 require 'forwardable'
 require 'active_support/all'
 require 'active_record'
+require 'active_support/core_ext/hash/indifferent_access'
 
 require 'arcserver/version'
 require 'arcserver/url_helper'

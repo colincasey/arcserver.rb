@@ -16,13 +16,12 @@ module ArcServer
         @url = url
       end
 
-
       def applyEdits(adds=[], updates=[], deletes=[])
         options = { body: { f: 'json', rollbackOnFailure: 'true' } }
         options[:body].merge!( { adds: adds.to_json } ) if adds.any?
         options[:body].merge!( { updates: updates.to_json } ) if updates.any?
         options[:body].merge!( { deletes: deletes.to_json } ) if deletes.any?
-        self.class.post(@url, options)
+        self.class.post(@url, options).with_indifferent_access
       end
 
     end

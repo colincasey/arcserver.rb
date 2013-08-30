@@ -3,13 +3,11 @@ module ArcServer
     class Feature
 
       include ActiveModel::Dirty
-
-      attr_accessor :attributes
-      # attr_accessor :geometry, :attributes
+      attr_accessor :geometry, :attributes
 
       def initialize(attr={})
-        # @geometry = attr[:geometry] || { }
-        @attributes = attr[:attributes] || { }
+        @geometry = attr.with_indifferent_access[:geometry] || { }
+        @attributes = attr.with_indifferent_access[:attributes] || { }
       end
 
 	  end

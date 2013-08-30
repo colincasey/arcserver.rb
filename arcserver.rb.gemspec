@@ -1,7 +1,6 @@
-# -*- encoding: utf-8 -*-
-lib = File.expand_path('../lib/', __FILE__)
-$:.unshift(lib) unless $:.include?(lib)
-
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'arcserver/version'
 
 Gem::Specification.new do |s|
@@ -16,7 +15,7 @@ Gem::Specification.new do |s|
   s.description = "A library for accessing ESRI ArcServer REST APIs from a unified interface"
 
   s.files = Dir.glob("{lib}/**/*") + %w(LICENSE README.rdoc Rakefile)
-  s.test_files = Dir.glob("{spec}/**/*")
+  s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.extra_rdoc_files = [
     "LICENSE",
     "README.rdoc"
@@ -28,8 +27,11 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'httparty'
 	s.add_runtime_dependency 'nokogiri'
 	s.add_runtime_dependency 'httpclient'
-	
+
+  s.add_development_dependency 'bundler', '~> 1.3'
+  s.add_development_dependency 'rake'
   s.add_development_dependency 'sdoc'
   s.add_development_dependency 'rspec'
+
 
 end
