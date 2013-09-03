@@ -1,9 +1,12 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'pp'
+require 'factory_girl'
 
 require_relative '../lib/arcserver'
 
 RSpec.configure do |config|
-  # some (optional) config here
+  config.include FactoryGirl::Syntax::Methods
 end
+
+# FactoryGirl.find_definitions

@@ -4,11 +4,14 @@ module ArcServer
   class ArcServerError < StandardError; end
 
   class MapServer
+
     include UrlHelper
+    include Queryable
+    include Identifiable
     extend  Forwardable
 
     attr_reader    :rest_service
-    def_delegators :rest_service, :export
+    def_delegators :rest_service, :url, :export
 
     def initialize(url, opts = {})
       raise Exception, "#{url} is not a valid map server url" unless map_server?(url)

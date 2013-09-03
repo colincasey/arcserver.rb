@@ -2,6 +2,7 @@
 
 module ArcServer
   module UrlHelper
+
     def rest_service?(url)
       url.to_s.match(/ArcGIS\/rest\/.*/)
     end

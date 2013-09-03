@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.summary = "A library for accessing ESRI ArcServer REST APIs from a unified interface"
   s.description = "A library for accessing ESRI ArcServer REST APIs from a unified interface"
 
-  s.files = Dir.glob("{lib}/**/*") + %w(LICENSE README.rdoc Rakefile)
+  s.files = Dir.glob("{lib}/**/*") + %w(LICENSE README.md Rakefile)
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.extra_rdoc_files = [
     "LICENSE",
@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake'
   s.add_development_dependency 'sdoc'
   s.add_development_dependency 'rspec'
+  s.add_development_dependency 'factory_girl'
 
 
 end

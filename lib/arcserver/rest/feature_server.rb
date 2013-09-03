@@ -11,7 +11,7 @@ module ArcServer
 
       # @param [String] url the REST url of a map service
       # @example
-      #   ArcServer::MapServer.new("http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/BloomfieldHillsMichigan/LandusePlanning/FeatureServer")
+      #   ArcServer::MapServer.new("http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/BloomfieldHillsMichigan/LandusePlanning/FeatureServer/0")
       def initialize(url)
         @url = url
       end
@@ -21,7 +21,7 @@ module ArcServer
         options[:body].merge!( { adds: adds.to_json } ) if adds.any?
         options[:body].merge!( { updates: updates.to_json } ) if updates.any?
         options[:body].merge!( { deletes: deletes.to_json } ) if deletes.any?
-        self.class.post(@url, options).with_indifferent_access
+        self.class.post("#{@url}/applyEdits", options).with_indifferent_access
       end
 
     end

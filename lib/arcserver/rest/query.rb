@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module ArcServer
   module REST
 		class Query
@@ -48,9 +50,9 @@ module ArcServer
       end
 
 			def execute(url)
-        response = self.class.get("#{url}/query", :query => params)
+        response = self.class.get("#{url}/query", query: params)
         Graphics::FeatureSet.new(response.with_indifferent_access)
-			end			
+			end
 		
 		end
 	end
