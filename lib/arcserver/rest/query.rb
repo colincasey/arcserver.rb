@@ -31,7 +31,7 @@ module ArcServer
             outStatistics: "",
             returnZ: false,
             returnM: false,
-            f: "pjson"
+            f: "json"
           }.merge(attr)
         defaults.each { |k,v| instance_variable_set("@#{k}",v) }
 			end
@@ -49,12 +49,15 @@ module ArcServer
         # @where.sub!(/\w*=\'(.*)\'/, { |s| puts s })
       end
 
-			def execute(url)
+      # Execute a query on a map layer
+      # You have to specify a layer avaible on the map server:
+      # http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_StateCityHighway_USA/MapServer/0
+      #
+      def execute(url)
         response = self.class.get("#{url}/query", query: params)
         Graphics::FeatureSet.new(response.with_indifferent_access)
-			end
-		
+      end
+
 		end
 	end
 end
-	

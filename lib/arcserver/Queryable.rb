@@ -2,9 +2,9 @@
 
 module ArcServer
   module Queryable
-    def query(attrs)
+    def query(layer, attrs)
       raise Exception, "#{url} is not defined" unless url
-      REST::Query.new(attrs).execute(url)
+      REST::Query.new(attrs).execute("#{url}/#{layer}")
     end
   end
 end

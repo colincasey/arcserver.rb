@@ -4,7 +4,7 @@ module ArcServer
 
       include HTTParty
       format :json
-      # debug_output $stdout
+      debug_output $stdout
 
       # The REST url of a feature service
       attr_reader :url
@@ -16,12 +16,12 @@ module ArcServer
         @url = url
       end
 
-      def applyEdits(adds=[], updates=[], deletes=[])
+      def applyEdits(layer, adds=[], updates=[], deletes=[])
         options = { body: { f: 'json', rollbackOnFailure: 'true' } }
         options[:body].merge!( { adds: adds.to_json } ) if adds.any?
         options[:body].merge!( { updates: updates.to_json } ) if updates.any?
-        options[:body].merge!( { deletes: deletes.to_json } ) if deletes.any?
-        self.class.post("#{@url}/applyEdits", options).with_indifferent_access
+        options[:body].merge!( { deletes: deletes } ) unless deletes.empty?
+        self.class.post("#{@url}/#{layer}/applyEdits", options).with_indifferent_access
       end
 
     end
