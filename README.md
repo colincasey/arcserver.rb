@@ -25,23 +25,42 @@ and export an image
 Query for retreive some features, the result will be a FeatureSet, which is a wrapper for the layer information and the features found
 
     query = ArcServer::REST::Query.new({ where: "district='4'", outFields: "*" })
-    feature_set = query.execute("http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/SanFrancisco/311Incidents/FeatureServer/0")
+    feature_set = query.execute('0', "http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/SanFrancisco/311Incidents/FeatureServer")
 
     puts feature_set.features
+
+Or directly within a MapServer or FeatureServer and his Layer number
+
+    feature_server = ArcServer::FeatureServer.new("http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/SanFrancisco/311Incidents/FeatureServer")
+    feature_set = feature_server.query('0', { where: "district='Lugano'", outFields: "*" })
+
+Query is possible in different ways, like through geometry
+
+    feature_server = ArcServer::FeatureServer.new("http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/SanFrancisco/311Incidents/FeatureServer")
+    feature_set = feature_server.query('0', { geometryType: 'esriGeometryEnvelope', geometry: '{"xmin":997878.8354556253,"ymin":5783588.635939264,"xmax":998147.5593831083,"ymax":5783767.785224252,"spatialReference":{"wkid":102100}}', outFields: "*", inSR: 102100, outSR: 102100 })
+
+    puts feature_set.features
+
+An Identify operation is a query but applied to all layers in the MapServer
+
+    map_server = ArcServer::MapServer.new("http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_StateCityHighway_USA/MapServer")
+    results = map_server.identify({ geometryType: "esriGeometryPoint", geometry: "-120,40", tolerance: "10", mapExtent: "-119,38,-121,41", imageDisplay: "400,300,96" })
+
+    puts results # each results has its own feature and metadata
 
 A feature is a simple class with Geometry and attributes, create one is easy
 
     f = ArcServer::Graphics::Feature.new({ geometry: { x: 997986.5006082746, y: 5783631.06234916, spatialReference: { wkid: 102100 }}, attributes: {status:1,req_id:"12345",req_type:"Graffiti Complaint – Private Property",req_date:"30.09.2013",req_time:"14:00",address:"via dei matti 0",district:"4"} })
 
-Once you have your feature, it's ready to be saved on a feature layer
+Once you have a feature, it's ready to be saved on a feature layer
 
-    fs = ArcServer::FeatureServer.new("http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/SanFrancisco/311Incidents/FeatureServer/0/applyEdits")
+    fs = ArcServer::FeatureServer.new("http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/SanFrancisco/311Incidents/FeatureServer")
 
     results = fs.applyEdits([ f ], [ ], [  ]) # adds, updates, deletes
 
 You can simply edit a feature if you have an objectId, maybe retrieved with a Query
 
-    f = ArcServer::Graphics::Feature.new({ attributes: { objectId:12345,address:"via dei matti 0",district:"4"} })
+    f = ArcServer::Graphics::Feature.new({ attributes: { objectId: 12345, address: "via dei matti 0", district: "4"} })
 
     results = fs.applyEdits([ ], [ f ], [  ]) # adds, updates, deletes
 
