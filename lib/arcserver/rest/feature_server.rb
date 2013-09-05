@@ -4,7 +4,7 @@ module ArcServer
 
       include HTTParty
       format :json
-      debug_output $stdout
+      # debug_output $stdout
 
       # The REST url of a feature service
       attr_reader :url

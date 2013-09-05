@@ -4,5 +4,6 @@ require 'arcserver/version'
 require "bundler/gem_tasks"
 
 task :default => :spec
+task :test => :spec
 
 RSpec::Core::RakeTask.new('spec')
