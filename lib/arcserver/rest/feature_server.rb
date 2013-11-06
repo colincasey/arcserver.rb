@@ -11,7 +11,7 @@ module ArcServer
 
       # @param [String] url the REST url of a map service
       # @example
-      #   ArcServer::MapServer.new("http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/BloomfieldHillsMichigan/LandusePlanning/FeatureServer/0")
+      # ArcServer::MapServer.new("http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/BloomfieldHillsMichigan/LandusePlanning/FeatureServer")
       def initialize(url)
         @url = url
       end

@@ -26,7 +26,7 @@ describe 'FeatureServer' do
 
     fs = ArcServer::FeatureServer.new("http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/SanFrancisco/311Incidents/FeatureServer")
     f = query_for_random_feature
-    f.attributes[:status] = Random.rand(3)+1
+    f.attributes[:status] = Random.rand(3) + 1
 
     results = fs.applyEdits('0', [  ], [ f ], [  ])
     results.should have_key(:updateResults)

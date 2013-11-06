@@ -27,12 +27,13 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'httparty'
 	s.add_runtime_dependency 'nokogiri'
 	s.add_runtime_dependency 'httpclient'
+  s.add_runtime_dependency 'json'
+  s.add_runtime_dependency 'rufus-scheduler'
 
   s.add_development_dependency 'bundler', '~> 1.3'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'sdoc'
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'factory_girl'
-
 
 end

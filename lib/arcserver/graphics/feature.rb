@@ -19,6 +19,10 @@ module ArcServer
         changed.include?('geometry')
       end
 
+      def extent
+
+      end
+
 	  end
 	end
 end

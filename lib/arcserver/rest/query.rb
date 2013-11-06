@@ -13,7 +13,7 @@ module ArcServer
             where: "",
             objectIds: "",
             time: "",
-            geometry: "",
+            geometry: nil,
             geometryType: "esriGeometryEnvelope",
             inSR: "",
             spatialRel: "esriSpatialRelIntersects",
@@ -33,12 +33,14 @@ module ArcServer
             returnM: false,
             f: "json"
           }.merge(attr)
-        defaults.each { |k,v| instance_variable_set("@#{k}",v) }
+        defaults.each { |k,v| instance_variable_set("@#{k}", v) }
 			end
 
       def params
         # sanitize_params
-        Hash[instance_variables.map { |name| [name.to_s[1..-1].to_sym, instance_variable_get(name)] } ]
+        hash = Hash[instance_variables.map { |name| [name.to_s[1..-1].to_sym, instance_variable_get(name)] } ]
+        hash[:geometry] = JSON.generate(hash[:geometry]) if hash[:geometry]
+        hash
       end
 
       # Utility method that sanitize che query parameters
