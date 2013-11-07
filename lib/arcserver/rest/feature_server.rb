@@ -21,7 +21,8 @@ module ArcServer
         options[:body].merge!( { adds: adds.to_json } ) if adds.any?
         options[:body].merge!( { updates: updates.to_json } ) if updates.any?
         options[:body].merge!( { deletes: deletes } ) unless deletes.empty?
-        self.class.post("#{@url}/#{layer}/applyEdits", options).with_indifferent_access
+        results = self.class.post("#{@url}/#{layer}/applyEdits", options)
+        results.with_indifferent_access
       end
 
     end

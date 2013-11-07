@@ -8,6 +8,7 @@ require_relative 'shared_context'
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
+  config.filter_run_excluding broken: true
 end
 
 # FactoryGirl.find_definitions

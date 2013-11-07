@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'Identify' do
+describe 'Custom Specs', broken: true do
 
   it "should query with a point" do
 
@@ -26,6 +26,15 @@ describe 'Identify' do
 
     fs_gp = ArcServer::Graphics::FeatureSet.new({ features: [ fs.features[0] ] })
     puts fs_gp.to_json
+
+    gp = ArcServer::GPServer.new("http://srvgists001.lugano.ch:8399/arcgis/rest/services/GisWeb/GPServer/GWClip")
+    params = { Feature_Set: particella.geometry.to_json }
+
+    gp.submitJob(params) do |results|
+      results["zone_clipped"].features.each do |f|
+        puts f.attributes['ZONA'] if f.attributes['Shape_Area'] > 1
+      end
+    end
 
   end
 

@@ -6,7 +6,7 @@ module ArcServer
 
       include HTTParty
       format :json
-      debug_output $stdout
+      # debug_output $stdout
 
       # The REST url of a map service
       attr_reader :url
@@ -18,18 +18,25 @@ module ArcServer
         @url = url
       end
 
+      def execute(params)
+        defaults = { f: 'json' }.merge(params)
+        results = self.class.get("#{url}/execute", query: defaults)['results']
+        Hash[*results].with_indifferent_access
+      end
+
       def submitJob(params)
 
         defaults = { f: 'json' }.merge(params)
         job_id = self.class.get("#{url}/submitJob", query: defaults)['jobId']
 
         s = Rufus::Scheduler.new
-        s.every '5s' do |job|
+        s.every '2s' do |job|
           result = self.class.get("#{url}/jobs/#{job_id}", query: { f: 'json' })
           if result['jobStatus'] == 'esriJobSucceeded'
-            features = []
+            features = {}
             result['results'].each do |r|
-              features << Graphics::FeatureSet.new(self.class.get("#{url}/jobs/#{job_id}/#{r[1]['paramUrl']}", query: { f: 'json' })['value'].with_indifferent_access)
+              # check on result type like GPFeatureRecordSetLayer
+              features[r[0]] = Graphics::FeatureSet.new(self.class.get("#{url}/jobs/#{job_id}/#{r[1]['paramUrl']}", query: { f: 'json' })['value'].with_indifferent_access)
             end
             yield features
             s.shutdown

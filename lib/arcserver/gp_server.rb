@@ -9,7 +9,7 @@ module ArcServer
     extend  Forwardable
 
     attr_reader    :rest_service
-    def_delegators :rest_service, :url, :submitJob
+    def_delegators :rest_service, :url, :submitJob, :execute
 
     def initialize(url, opts = {})
       raise Exception, "#{url} is not a valid map server url" unless gp_server?(url)

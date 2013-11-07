@@ -26,7 +26,12 @@ describe 'FeatureServer' do
 
     fs = ArcServer::FeatureServer.new("http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/SanFrancisco/311Incidents/FeatureServer")
     f = query_for_random_feature
-    f.attributes[:status] = Random.rand(3) + 1
+
+    puts f.inspect
+
+    f.attributes[:address] = "The Avengers Tower"
+
+    puts f.inspect
 
     results = fs.applyEdits('0', [  ], [ f ], [  ])
     results.should have_key(:updateResults)
@@ -40,9 +45,9 @@ describe 'FeatureServer' do
   it 'should delete features' do
 
     feature_server = ArcServer::FeatureServer.new("http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/SanFrancisco/311Incidents/FeatureServer")
-    feature_set = feature_server.query('0', { geometryType: 'esriGeometryEnvelope', geometry: '{"xmin":997878.8354556253,"ymin":5783588.635939264,"xmax":998147.5593831083,"ymax":5783767.785224252,"spatialReference":{"wkid":102100}}', outFields: "*", inSR: 102100, outSR: 102100 })
+    feature_set = feature_server.query('0', { where: 'status=1', outFields: "*", inSR: 102100, outSR: 102100 })
 
-    deletes = feature_set.features.map { |f| f.attributes[:objectid] }.join(',')
+    deletes = feature_set.features[1..3].map { |f| f.attributes[:objectid] }.join(',')
     results = feature_server.applyEdits('0', [  ], [  ], deletes)
     results.should have_key(:deleteResults)
 

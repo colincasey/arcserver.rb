@@ -29,8 +29,9 @@ describe 'Query' do
   it 'should query by geometry' do
 
     feature_server = ArcServer::FeatureServer.new("http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/SanFrancisco/311Incidents/FeatureServer")
-    feature_set = feature_server.query('0', { geometryType: 'esriGeometryEnvelope', geometry: '{"xmin":997878.8354556253,"ymin":5783588.635939264,"xmax":998147.5593831083,"ymax":5783767.785224252,"spatialReference":{"wkid":102100}}', outFields: "*", inSR: 102100, outSR: 102100 })
-    feature_set.features.should_not be_empty
+    feature_set = feature_server.query('0', { geometryType: 'esriGeometryEnvelope', geometry: { xmin: -180, ymin: -90, xmax: 180, ymax: 90, spatialReference: { wkid: 4326 }}, outFields: "*" })
+    feature_set.should_not be_nil
+    feature_set.features.size.should be > 0
 
   end
 

@@ -39,7 +39,7 @@ module ArcServer
       def params
         # sanitize_params
         hash = Hash[instance_variables.map { |name| [name.to_s[1..-1].to_sym, instance_variable_get(name)] } ]
-        hash[:geometry] = JSON.generate(hash[:geometry]) if hash[:geometry]
+        hash[:geometry] = hash[:geometry].to_json if hash[:geometry]
         hash
       end
 
