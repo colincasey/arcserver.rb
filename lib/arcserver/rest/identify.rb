@@ -28,12 +28,14 @@ module ArcServer
       end
 
       def params
-        Hash[instance_variables.map { |name| [name.to_s[1..-1].to_sym, instance_variable_get(name)] } ]
+        hash = Hash[instance_variables.map { |name| [name.to_s[1..-1].to_sym, instance_variable_get(name)] } ]
+        hash[:geometry] = hash[:geometry].to_json if hash[:geometry]
+        hash
       end
 
       def execute(url)
         response = self.class.get("#{url}/identify", query: params)
-        response.with_indifferent_access[:results].map { |r| IdentifyResult.new(r) }
+        response["results"].map { |r| IdentifyResult.new(r) }
       end
 
     end

@@ -26,12 +26,9 @@ describe 'FeatureServer' do
 
     fs = ArcServer::FeatureServer.new("http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/SanFrancisco/311Incidents/FeatureServer")
     f = query_for_random_feature
-
-    puts f.inspect
-
     f.attributes[:address] = "The Avengers Tower"
 
-    puts f.inspect
+    puts f.to_json
 
     results = fs.applyEdits('0', [  ], [ f ], [  ])
     results.should have_key(:updateResults)
