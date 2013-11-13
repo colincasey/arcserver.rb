@@ -18,8 +18,8 @@ module ArcServer
 
       def applyEdits(layer, adds=[], updates=[], deletes=[])
         options = { body: { f: 'json', rollbackOnFailure: 'true' } }
-        options[:body].merge!( { adds: adds.to_json(only: [ :geometry, :attributes] ) } ) if adds.any?
-        options[:body].merge!( { updates: updates.to_json(only: [ :geometry, :attributes] ) } ) if updates.any?
+        options[:body].merge!( { adds: adds.to_json(only: [ :geometry, :attributes ]) } ) if adds.any?
+        options[:body].merge!( { updates: updates.to_json(only: [ :geometry, :attributes ] ) } ) if updates.any?
         options[:body].merge!( { deletes: deletes } ) unless deletes.empty?
         results = self.class.post("#{@url}/#{layer}/applyEdits", options)
         results.with_indifferent_access

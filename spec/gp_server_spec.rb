@@ -4,11 +4,13 @@ require 'spec_helper'
 
 describe 'GPServer' do
 
-  it "should send a message in a bottle" do
+  it "sends a message in a bottle" do
 
     gp = ArcServer::GPServer.new("http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_Currents_World/GPServer/MessageInABottle")
+    # feature_set = ArcServer::Graphics::FeatureSet.new( features: [ { geometry: ArcServer::Geometry::Point.new({ x: -76.2890625, y: 35.859375, spatialReference: { wkid: 4326 } }) } ])
 
-    feature_set = ArcServer::Graphics::FeatureSet.new( geometryType: "esriGeometryPoint", features: [ { geometry: { x: -76.2890625, y: 35.859375,spatialReference: { wkid: 4326 } } } ])
+    feature = ArcServer::Graphics::Feature.new({ geometry: ArcServer::Geometry::Point.new({ x: -76.2890625, y: 35.859375, spatialReference: { wkid: 4326 } }) })
+    feature_set = ArcServer::Graphics::FeatureSet.new({ features: [ feature ] });
 
     params = { Input_Point: feature_set.to_json, Days: 180 }
     results =  gp.execute(params)
@@ -19,7 +21,7 @@ describe 'GPServer' do
 
   end
 
-  it "should execute a Geo Processing Tool", broken: true do
+  it "executes a Geo Processing Tool", broken: true do
 
     gp = ArcServer::GPServer.new("http://srvgists001.lugano.ch:8399/arcgis/rest/services/GisWeb/GPServer/GWClip")
 

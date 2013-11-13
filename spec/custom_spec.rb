@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe 'Custom Specs' do
 
-  it "should query with a point" do
+  it "should query with a point", broken: true do
 
     map = ArcServer::MapServer.new("http://srvgists006.lugano.ch:6080/arcgis/rest/services/Territorio/OggettiLugano/MapServer")
     feature_set = map.query('0', { where: "ID_SCHEDA=7", outFields: "*" })
