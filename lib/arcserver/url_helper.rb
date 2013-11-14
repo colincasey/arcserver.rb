@@ -15,6 +15,10 @@ module ArcServer
       url.to_s.match(/\/FeatureServer/)
     end
 
+    def gp_server?(url)
+      url.to_s.match(/\/GPServer/)
+    end
+
     def to_rest(url)
       rest_service?(url) ? url : url.sub('/ArcGIS/', '/ArcGIS/rest/')
     end

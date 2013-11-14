@@ -1,25 +1,41 @@
 # encoding: utf-8
 
-require 'httparty'
-require 'forwardable'
-require 'active_support/all'
-require 'active_record'
-require 'active_support/core_ext/hash/indifferent_access'
+module ArcServer
 
-require 'arcserver/version'
-require 'arcserver/url_helper'
-require 'arcserver/queryable'
-require 'arcserver/identifiable'
-require 'arcserver/map_server'
-require 'arcserver/feature_server'
+  require 'ostruct'
+  require 'httparty'
+  require 'forwardable'
+  require 'rufus-scheduler'
+  require 'active_support/all'
+  require 'active_support/core_ext/hash/indifferent_access'
 
-require 'arcserver/graphics/feature_set'
-require 'arcserver/graphics/feature'
+  require_relative 'arcserver/version'
+  require_relative 'arcserver/url_helper'
+  require_relative 'arcserver/queryable'
+  require_relative 'arcserver/identifiable'
+  require_relative 'arcserver/map_server'
+  require_relative 'arcserver/feature_server'
+  require_relative 'arcserver/gp_server'
 
-require 'arcserver/rest/map_server'
-require 'arcserver/rest/feature_server'
-require 'arcserver/rest/query'
-require 'arcserver/rest/identify'
+  require_relative 'arcserver/geometry/geometry'
 
-# relative_load_paths = %w[ arcserver ]
-# ActiveSupport::Dependencies.autoload_paths += relative_load_paths
+  require_relative 'arcserver/graphics/feature_set'
+  require_relative 'arcserver/graphics/feature'
+
+  require_relative 'arcserver/rest/map_server'
+  require_relative 'arcserver/rest/feature_server'
+  require_relative 'arcserver/rest/query'
+  require_relative 'arcserver/rest/identify'
+  require_relative 'arcserver/rest/gp_server'
+
+  # relative_load_paths = %w[ arcserver ]
+  # ActiveSupport::Dependencies.autoload_paths += relative_load_paths
+
+end
+
+# monkeypath OpenStruct
+class OpenStruct
+  def as_json(options = nil)
+    table.as_json(options)
+  end
+end

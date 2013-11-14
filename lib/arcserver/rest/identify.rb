@@ -28,7 +28,12 @@ module ArcServer
       end
 
       def params
-        Hash[instance_variables.map { |name| [name.to_s[1..-1].to_sym, instance_variable_get(name)] } ]
+        hash = Hash[instance_variables.map { |name| [name.to_s[1..-1].to_sym, instance_variable_get(name)] } ]
+        if hash[:geometry]
+          hash[:geometryType] = hash[:geometry].geometryType
+          hash[:geometry] = hash[:geometry].to_json
+        end
+        hash
       end
 
       def execute(url)
@@ -47,7 +52,9 @@ module ArcServer
         @layerName = attrs[:layerName]
         @value = attrs[:value]
         @displayFieldName = attrs[:displayFieldName]
-        @feature = Graphics::Feature.new({ geometry: attrs[:geometry], attributes: attrs[:attributes] })
+        @geometryType = attrs[:geometryType]
+        @geometry = ArcServer::Geometry::Geometry.build(attrs[:geometry], @geometryType)
+        @feature = Graphics::Feature.new({ geometry: @geometry, attributes: attrs[:attributes] })
       end
 
     end
