@@ -16,8 +16,9 @@ module ArcServer
         klass.new(geometry) rescue nil
       end
 
-      def self.fromJSON(json)
-        parsed = JSON.parse(json)
+      def self.create(json)
+
+        parsed = json.is_a?(Hash) ? json : JSON.parse(json)
 
         if parsed['x']
           ArcServer::Geometry::Point.new(parsed)

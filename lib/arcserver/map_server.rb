@@ -6,8 +6,8 @@ module ArcServer
   class MapServer
 
     include UrlHelper
-    include Queryable
     include Identifiable
+    include Queryable
     extend  Forwardable
 
     attr_reader    :rest_service
