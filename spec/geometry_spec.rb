@@ -60,12 +60,20 @@ describe 'Geometry' do
 
   it "calculates the right extent" do
 
-    basemap = ArcServer::MapServer.new("http://srvgists006.lugano.ch:6080/arcgis/rest/services/Basemap/BaseMapDyn/MapServer")
-    fs = basemap.query('3', { where: "KEYGIS=5960100237", outFields: "*", returnGeometry: true })
-    particella = fs.features[0]
+    basemap = ArcServer::MapServer.new("http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics/ESRI_Census_USA/MapServer")
+    fs = basemap.query('3', { where: "FEMALES>1", outFields: "*", returnGeometry: true })
+    feature = fs.features[0]
+    feature.geometry.should be_kind_of(ArcServer::Geometry::Polygon)
+    feature.geometry.extent.should have(4).item
 
-    particella.geometry.should be_kind_of(ArcServer::Geometry::Polygon)
-    particella.geometry.extent.should have(4).item
+  end
+
+  it "don't explode without a geometry" do
+
+    basemap = ArcServer::MapServer.new("http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics/ESRI_Census_USA/MapServer")
+    fs = basemap.query('3', { where: "FEMALES>1", outFields: "*", returnGeometry: false })
+    feature = fs.features[0]
+    feature.geometry.should be nil
 
   end
 

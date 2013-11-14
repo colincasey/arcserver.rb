@@ -18,7 +18,7 @@ module ArcServer
 
       def self.create(json)
 
-        parsed = json.is_a?(Hash) ? json : JSON.parse(json)
+        parsed = json.is_a?(Hash) ? json : JSON.parse(json) rescue {}
 
         if parsed['x']
           ArcServer::Geometry::Point.new(parsed)
@@ -30,6 +30,8 @@ module ArcServer
           ArcServer::Geometry::Multipoint.new(parsed)
         elsif parsed['ymax']
           ArcServer::Geometry::Envelope.new(parsed)
+        else
+          nil
         end
 
       end
