@@ -65,7 +65,10 @@ module ArcServer
       end
 
       def extent
-
+        poly = self.rings.flatten
+        x = poly.values_at(*poly.each_index.select {|i| i.even?})
+        y = poly.values_at(*poly.each_index.select {|i| i.odd?})
+        [x.min, y.min, x.max, y.max]
       end
 
     end

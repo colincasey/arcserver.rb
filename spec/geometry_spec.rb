@@ -58,4 +58,15 @@ describe 'Geometry' do
     geometry.should be_kind_of(ArcServer::Geometry::Envelope)
   end
 
+  it "calculates the right extent" do
+
+    basemap = ArcServer::MapServer.new("http://srvgists006.lugano.ch:6080/arcgis/rest/services/Basemap/BaseMapDyn/MapServer")
+    fs = basemap.query('3', { where: "KEYGIS=5960100237", outFields: "*", returnGeometry: true })
+    particella = fs.features[0]
+
+    particella.geometry.should be_kind_of(ArcServer::Geometry::Polygon)
+    particella.geometry.extent.should have(4).item
+
+  end
+
 end
