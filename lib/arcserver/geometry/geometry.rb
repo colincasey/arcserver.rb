@@ -16,6 +16,23 @@ module ArcServer
         klass.new(geometry) rescue nil
       end
 
+      def self.fromJSON(json)
+        parsed = JSON.parse(json)
+
+        if parsed['x']
+          ArcServer::Geometry::Point.new(parsed)
+        elsif  parsed['paths']
+          ArcServer::Geometry::Polyline.new(parsed)
+        elsif parsed['rings']
+          ArcServer::Geometry::Polygon.new(parsed)
+        elsif parsed['points']
+          ArcServer::Geometry::Multipoint.new(parsed)
+        elsif parsed['ymax']
+          ArcServer::Geometry::Envelope.new(parsed)
+        end
+
+      end
+
       def geometryType
         nil
       end
@@ -32,10 +49,6 @@ module ArcServer
         "esriGeometryPoint"
       end
 
-      def extent
-        nil
-      end
-
     end
 
     class Multipoint < Geometry
@@ -45,9 +58,15 @@ module ArcServer
     end
 
     class Polygon < Geometry
+
       def geometryType
         "esriGeometryPolygon"
       end
+
+      def extent
+
+      end
+
     end
 
     class Polyline < Geometry
