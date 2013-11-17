@@ -23,7 +23,6 @@ module ArcServer
         hash
       end
 
-
       def project(attrs={})
         params = {
             f: 'json',
@@ -31,13 +30,10 @@ module ArcServer
             inSR: '',
             outSR: ''
         }.merge(attrs)
-
-        self.class.get("#{url}/project", query: to_params(params))
+        self.class.get("#{url}/project", query: to_params(params))["response"]
       end
 
       def buffer(attrs={})
-
-
 
       end
 
