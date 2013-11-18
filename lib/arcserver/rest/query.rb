@@ -59,7 +59,7 @@ module ArcServer
       # http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_StateCityHighway_USA/MapServer/0
       #
       def execute(url)
-        response = self.class.get("#{url}/query", query: self.to_params)
+        response = self.class.get("#{url}/query", query: params)
         Graphics::FeatureSet.new(response.with_indifferent_access)
       end
 

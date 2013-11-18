@@ -6,7 +6,7 @@ module ArcServer
 
       include HTTParty
       format :json
-      debug_output $stdout
+      # debug_output $stdout
 
       # The REST url of a feature service
       attr_reader :url
@@ -30,11 +30,23 @@ module ArcServer
             inSR: '',
             outSR: ''
         }.merge(attrs)
-        self.class.get("#{url}/project", query: to_params(params))["response"]
+        response = self.class.get("#{url}/project", query: to_params(params))
+        response["geometries"].map { |g| ArcServer::Geometry::Geometry.create(g) }
       end
 
       def buffer(attrs={})
-
+        params = {
+            f: 'json',
+            geometries: '',
+            inSR: '',
+            outSR: '',
+            bufferSR: '',
+            distances: '',
+            unit: '',
+            unionResults: 'false'
+        }.merge(attrs)
+        response = self.class.get("#{url}/buffer", query: to_params(params))
+        response["geometries"].map { |g| ArcServer::Geometry::Geometry.create(g) }
       end
 
     end
