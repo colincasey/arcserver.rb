@@ -10,7 +10,7 @@ module ArcServer
       end
 
       def self.create(json)
-        parsed = json.is_a?(Hash) ? json : JSON.parse(json)
+        parsed = (json.is_a?(Hash) ? json : JSON.parse(json)).with_indifferent_access
         Feature.new({ geometry: ArcServer::Geometry::Geometry.create(parsed['geometry']), attributes: parsed['attributes'] })
       end
 
