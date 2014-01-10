@@ -14,14 +14,11 @@ Gem::Specification.new do |s|
   s.summary = "A library for accessing ESRI ArcServer REST APIs from a unified interface"
   s.description = "A library for accessing ESRI ArcServer REST APIs from a unified interface"
 
-  s.files = Dir.glob("{lib}/**/*") + %w(LICENSE README.md Rakefile)
-  s.test_files = s.files.grep(%r{^(test|spec|features)/})
-  s.extra_rdoc_files = [
-    "LICENSE",
-    "README.md"
-  ]
+  s.files         = `git ls-files`.split($/)
+  s.executables   = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  s.test_files    = s.files.grep(%r{^(test|spec|features)/})
+  s.require_paths = ["lib"]
 
-  s.require_paths = %w[ lib ]
   s.add_runtime_dependency 'activesupport'
   s.add_runtime_dependency 'httparty'
 	s.add_runtime_dependency 'nokogiri'

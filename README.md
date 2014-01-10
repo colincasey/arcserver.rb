@@ -95,6 +95,38 @@ deletes = feature_set.features.map { |f| f.attributes[:objectid] }.join(',')
 results = feature_server.applyEdits('0', [], [], deletes)
 ```
 
+## GeoProcessing Tool
+
+Geoprocessing is a fundamental part of enterprise GIS operations. Geoprocessing provides the data analysis, data management, and data conversion tools necessary for all GIS users.
+
+The ArcGIS Server supports two types of GPServer: Sync and Async.
+
+The message in a bottle example, sync
+
+```ruby
+gp = ArcServer::GPServer.new("http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_Currents_World/GPServer/MessageInABottle")
+
+feature = ArcServer::Graphics::Feature.new({ geometry: ArcServer::Geometry::Point.new({ x: -76.2890625, y: 35.859375, spatialReference: { wkid: 4326 } }) })
+
+feature_set = ArcServer::Graphics::FeatureSet.new({ features: [ feature ] })
+
+params = { Input_Point: feature_set.to_json, Days: 1 }
+results =  gp.execute(params)
+
+puts results => {"paramName"=>"Output", "dataType"=>"GPFeatureRecordSetLayer", "value"=>{"geometryType"=>"esriGeometryPolyline", "spatialReference"=>{"wkid"=>4326}, "features"=>[{"attributes"=>{"FID"=>1, "FNODE_"=>0, "Shape_Length"=>0.19891537566450523}, "geometry"=>{"paths"=>[[[-76.2890625, 35.859375], [-76.09141540527344, 35.88180160522461]]]}}], "exceededTransferLimit"=>false}}
+```
+
+```ruby
+gp = ArcServer::GPServer.new("http://sampleserver4.arcgisonline.com/ArcGIS/rest/services/Arcpy/ArcpyMapping/GPServer/SaveToPDF")
+
+params = { Web_Map_as_JSON: File.open('spec/webmap.json', "rb").read, Format: 'JPG', Layout_Template: 'MAP_ONLY' }
+gp.submitJob(params) do |results|
+results.should have_key('Output_File')
+results['Output_File'].should have_key("url")
+results['Output_File']['url'].should match /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6}):?(\d{1,6})*([\/\w \.-]*)*\/?$/
+end
+```
+
 ## Contributors
 
 This is a fork of arcserver.rb originally written by:

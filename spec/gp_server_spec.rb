@@ -9,7 +9,7 @@ describe 'GPServer' do
 
       gp = ArcServer::GPServer.new("http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_Currents_World/GPServer/MessageInABottle")
       feature = ArcServer::Graphics::Feature.new({ geometry: ArcServer::Geometry::Point.new({ x: -76.2890625, y: 35.859375, spatialReference: { wkid: 4326 } }) })
-      feature_set = ArcServer::Graphics::FeatureSet.new({ features: [ feature ] });
+      feature_set = ArcServer::Graphics::FeatureSet.new({ features: [ feature ] })
 
       params = { Input_Point: feature_set.to_json, Days: 180 }
       results =  gp.execute(params)
@@ -19,36 +19,33 @@ describe 'GPServer' do
       results.should have_key :value
 
     end
+
+    it "executes export Web Map Task" do
+      gp = ArcServer::GPServer.new("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task")
+
+      webmap = '{"mapOptions":{"showAttribution":true,"extent":{"xmin":-9653813.186180541,"ymin":4553927.749172574,"xmax":-9427865.330569474,"ymax":4689068.415180817,"spatialReference":{"wkid":102100}},"spatialReference":{"wkid":102100},"scale":577790.5542889992},"operationalLayers":[{"id":"Ocean_Basemap_5301","title":"Ocean_Basemap_5301","opacity":1,"minScale":591657527.591555,"maxScale":9027.977411,"url":"http://services.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer"},{"id":"LOJIC_LandRecords_Louisville_3326","title":"LOJIC_LandRecords_Louisville_3326","opacity":0.24,"minScale":0,"maxScale":0,"url":"http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Louisville/LOJIC_LandRecords_Louisville/MapServer","visibleLayers":[0,2],"layers":[]},{"id":"map_graphics","minScale":0,"maxScale":0,"featureCollection":{"layers":[]}}],"exportOptions":{"outputSize":[800,1100],"dpi":96},"layoutOptions":{"titleText":"Louisville – Land Records, Portrait JPG","scaleBarOptions":{},"legendOptions":{"operationalLayers":[]}}}'
+
+      params = { Web_Map_as_JSON: webmap, Format: 'JPG', Layout_Template: 'MAP_ONLY' }
+      results = gp.execute(params)
+      results.should have_key('Output_File')
+      results['Output_File'].should have_key("url")
+      results['Output_File']['url'].should match /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6}):?(\d{1,6})*([\/\w \.-]*)*\/?$/
+    end
+
   end
 
   context 'when the GP is aynchronous' do
 
-    it "executes export Web Map Task" do
-      gp = ArcServer::GPServer.new("http://srvgists006.lugano.ch:6080/arcgis/rest/services/Geoprocessing/ExportWebMap/GPServer/Export%20Web%20Map")
-      params = { Web_Map_as_JSON: File.open('spec/webmap.json', "rb").read, Format: 'JPG', Layout_Template: 'MAP_ONLY' }
-      gp.submitJob(params) do |results|
-        results.should have_key('Output_File')
-        results['Output_File'].should have_key("url")
-        results['Output_File']['url'].should match /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6}):?(\d{1,6})*([\/\w \.-]*)*\/?$/
-      end
-    end
-
     it "executes a Geo Processing Tool" do
 
-      gp = ArcServer::GPServer.new("http://gis.lugano.ch/arcgis/rest/services/GisWeb/GPServer/GWClip")
-
-      particella = '{"features":[{"geometry":{"rings":[[[717172.6070000008,95751.06210000068],[717158.6838999987,95784.61699999869],[717154.0441000015,95795.80009999871],[717154.5069999993,95795.98910000175],[717154.3260000013,95796.42799999937],[717163.7069999985,95800.2501000017],[717163.5260000005,95800.6950000003],[717173.6851000004,95804.83399999887],[717173.8660999984,95804.3898999989],[717183.257100001,95808.21599999815],[717183.4420999996,95807.77910000086],[717183.9050000012,95807.96810000017],[717202.3891000003,95763.03290000185],[717196.4549000002,95760.59910000116],[717196.6218999997,95760.18100000173],[717178.7580000013,95753.0540000014],[717178.5909999982,95753.47190000117],[717172.6070000008,95751.06210000068]]]}}]}'
-
-      params = { Feature_Set: particella }
+      gp = ArcServer::GPServer.new("http://sampleserver6.arcgisonline.com/arcgis/rest/services/911CallsHotspot/GPServer/911%20Calls%20Hotspot")
+      q = "(Date >= date '1998-01-01 12:00:00' and Date <= date '1998-01-07 12:00:00') AND (Day = 'SUN' OR Day= 'SAT' OR Day = 'FRI' OR Day ='MON' OR Day='TUE' OR Day='WED' OR Day ='THU')"
+      params = { Query: q }
 
       gp.submitJob(params) do |results|
-        zone = results['zone_clipped']
-        zone.should_not be_nil
-        zone.should be_kind_of(ArcServer::Graphics::FeatureSet)
-        zone.should respond_to(:features)
-        zone.features.each do |f|
-          ["AP-EP", "Strada"].should include f.attributes[:ZONA]
-        end
+        results.should have_key('Output_Features')
+        results.should have_key('Hotspot_Raster')
+        results['Hotspot_Raster'].should have_key('mapImage')
       end
 
     end

@@ -20,8 +20,8 @@ module ArcServer
 
       def execute(params)
         defaults = { f: 'json' }.merge(params)
-        results = self.class.get("#{url}/execute", query: defaults)
-        Hash(*results['results']).with_indifferent_access
+        results = self.class.get("#{url}/execute", query: defaults)['results']
+        Hash(*results).with_indifferent_access
       end
 
       def checkJobStatus
