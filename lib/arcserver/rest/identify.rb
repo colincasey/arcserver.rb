@@ -33,6 +33,7 @@ module ArcServer
           hash[:geometryType] = hash[:geometry].geometryType
           hash[:geometry] = hash[:geometry].to_json
         end
+        hash[:mapExtent] = hash[:mapExtent].join(',') if hash[:mapExtent]
         hash
       end
 

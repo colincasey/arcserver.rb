@@ -11,9 +11,7 @@ module ArcServer
         @geometryType = attrs[:geometryType] || ""
 
         if attrs[:features]
-          @features = attrs[:features].map do |feature|
-            feature.is_a?(Feature) ? feature : Feature.create(feature)
-          end
+          @features = attrs[:features].map { |f| f.is_a?(Feature) ? f : Feature.create(f) }
         end
 
         self

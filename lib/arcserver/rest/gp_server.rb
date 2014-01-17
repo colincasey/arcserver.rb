@@ -20,26 +20,55 @@ module ArcServer
 
       def execute(params)
         defaults = { f: 'json' }.merge(params)
-        results = self.class.get("#{url}/execute", query: defaults)['results']
-        Hash[*results].with_indifferent_access
+        self.class.get("#{url}/execute", query: defaults)['results']
+      end
+
+      def checkJobStatus
+        @status
+      end
+
+      def build_params(results, esri_job_id)
+
+        all_params = {}
+        results['results'].each do |r|
+          result_param = self.class.get("#{url}/jobs/#{esri_job_id}/#{r[1]['paramUrl']}", query: { f: 'json' }).with_indifferent_access
+          case result_param['dataType']
+            when 'GPFeatureRecordSetLayer'
+              all_params[result_param['paramName']] = Graphics::FeatureSet.new(result_param['value'])
+            else
+              all_params[result_param['paramName']] = result_param['value']
+          end
+        end
+        all_params.with_indifferent_access
       end
 
       def submitJob(params)
 
         defaults = { f: 'json' }.merge(params)
-        job_id = self.class.get("#{url}/submitJob", query: defaults)['jobId']
+        esri_job_id = self.class.get("#{url}/submitJob", query: defaults)['jobId']
 
         s = Rufus::Scheduler.new
         s.every '2s' do |job|
-          result = self.class.get("#{url}/jobs/#{job_id}", query: { f: 'json' })
-          if result['jobStatus'] == 'esriJobSucceeded'
-            features = {}
-            result['results'].each do |r|
-              # check on result type like GPFeatureRecordSetLayer
-              features[r[0]] = Graphics::FeatureSet.new(self.class.get("#{url}/jobs/#{job_id}/#{r[1]['paramUrl']}", query: { f: 'json' })['value'].with_indifferent_access)
-            end
-            yield features
-            s.shutdown
+
+          results = self.class.get("#{url}/jobs/#{esri_job_id}", query: { f: 'json' })
+          @status = results['jobStatus']
+
+          case @status
+            when 'esriJobSucceeded'
+              yield build_params(results, esri_job_id)
+              s.shutdown
+            when 'esriJobWaiting'
+              nil
+            when 'esriJobSubmitted'
+              nil
+            when 'esriJobExecuting'
+              nil
+            when 'esriJobCancelled'
+              nil
+            when 'esriJobFailed'
+              nil
+            when 'esriJobCancelling'
+              nil
           end
         end
         s.join

@@ -6,7 +6,7 @@ describe 'Identify' do
 
   it 'identify feature in MapServer' do
     map_server = ArcServer::MapServer.new("http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_StateCityHighway_USA/MapServer")
-    results = map_server.identify({ geometry: ArcServer::Geometry::Point.new({x: -120, y: 40}), tolerance: "10", mapExtent: "-119,38,-121,41", imageDisplay: "400,300,96" })
+    results = map_server.identify({ geometry: ArcServer::Geometry::Point.new({x: -120, y: 40}), tolerance: "10", mapExtent: [-119, 38, -121, 41], imageDisplay: "400,300,96" })
 
     results.each do |result|
       ["Nevada", "California", "Washoe", "Lassen", "Plumas"].should include result.value

@@ -15,6 +15,10 @@ module ArcServer
       url.to_s.match(/\/FeatureServer/)
     end
 
+    def geometry_service?(url)
+      url.to_s.match(/\/GeometryServer$/)
+    end
+
     def gp_server?(url)
       url.to_s.match(/\/GPServer/)
     end

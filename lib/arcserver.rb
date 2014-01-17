@@ -1,37 +1,29 @@
 # encoding: utf-8
 
-module ArcServer
+require 'ostruct'
+require 'httparty'
+require 'forwardable'
+require 'rufus-scheduler'
+require 'active_support/all'
+# require 'active_support/core_ext/hash/indifferent_access'
 
-  require 'ostruct'
-  require 'httparty'
-  require 'forwardable'
-  require 'rufus-scheduler'
-  require 'active_support/all'
-  require 'active_support/core_ext/hash/indifferent_access'
-
-  require_relative 'arcserver/version'
-  require_relative 'arcserver/url_helper'
-  require_relative 'arcserver/queryable'
-  require_relative 'arcserver/identifiable'
-  require_relative 'arcserver/map_server'
-  require_relative 'arcserver/feature_server'
-  require_relative 'arcserver/gp_server'
-
-  require_relative 'arcserver/geometry/geometry'
-
-  require_relative 'arcserver/graphics/feature_set'
-  require_relative 'arcserver/graphics/feature'
-
-  require_relative 'arcserver/rest/map_server'
-  require_relative 'arcserver/rest/feature_server'
-  require_relative 'arcserver/rest/query'
-  require_relative 'arcserver/rest/identify'
-  require_relative 'arcserver/rest/gp_server'
-
-  # relative_load_paths = %w[ arcserver ]
-  # ActiveSupport::Dependencies.autoload_paths += relative_load_paths
-
-end
+require 'arcserver/version'
+require 'arcserver/url_helper'
+require 'arcserver/identifiable'
+require 'arcserver/queryable'
+require 'arcserver/map_server'
+require 'arcserver/geometry_service'
+require 'arcserver/feature_server'
+require 'arcserver/gp_server'
+require 'arcserver/geometry/geometry'
+require 'arcserver/graphics/feature_set'
+require 'arcserver/graphics/feature'
+require 'arcserver/rest/map_server'
+require 'arcserver/rest/geometry_service'
+require 'arcserver/rest/feature_server'
+require 'arcserver/rest/query'
+require 'arcserver/rest/identify'
+require 'arcserver/rest/gp_server'
 
 # monkeypath OpenStruct
 class OpenStruct
