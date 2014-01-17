@@ -113,17 +113,17 @@ feature_set = ArcServer::Graphics::FeatureSet.new({ features: [ feature ] })
 params = { Input_Point: feature_set.to_json, Days: 1 }
 results =  gp.execute(params)
 
-puts results => {"paramName"=>"Output", "dataType"=>"GPFeatureRecordSetLayer", "value"=>{"geometryType"=>"esriGeometryPolyline", "spatialReference"=>{"wkid"=>4326}, "features"=>[{"attributes"=>{"FID"=>1, "FNODE_"=>0, "Shape_Length"=>0.19891537566450523}, "geometry"=>{"paths"=>[[[-76.2890625, 35.859375], [-76.09141540527344, 35.88180160522461]]]}}], "exceededTransferLimit"=>false}}
+puts results # => {"paramName"=>"Output", "dataType"=>"GPFeatureRecordSetLayer", "value"=>{"geometryType"=>"esriGeometryPolyline", "spatialReference"=>{"wkid"=>4326}, "features"=>[{"attributes"=>{"FID"=>1, "FNODE_"=>0, "Shape_Length"=>0.19891537566450523}, "geometry"=>{"paths"=>[[[-76.2890625, 35.859375], [-76.09141540527344, 35.88180160522461]]]}}], "exceededTransferLimit"=>false}}
 ```
 
-```ruby
-gp = ArcServer::GPServer.new("http://sampleserver4.arcgisonline.com/ArcGIS/rest/services/Arcpy/ArcpyMapping/GPServer/SaveToPDF")
+Example for an asyn service:
 
-params = { Web_Map_as_JSON: File.open('spec/webmap.json', "rb").read, Format: 'JPG', Layout_Template: 'MAP_ONLY' }
+```ruby
+gp = ArcServer::GPServer.new("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task")
+
+params = { Web_Map_as_JSON: '{ ... super long map in json ... }', Format: 'JPG', Layout_Template: 'MAP_ONLY' }
 gp.submitJob(params) do |results|
-results.should have_key('Output_File')
-results['Output_File'].should have_key("url")
-results['Output_File']['url'].should match /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6}):?(\d{1,6})*([\/\w \.-]*)*\/?$/
+  puts results['Output_File']['url'] # => http://sampleserver6.arcgisonline.com ... /map.jpg
 end
 ```
 
