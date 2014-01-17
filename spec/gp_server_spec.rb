@@ -15,8 +15,9 @@ describe 'GPServer' do
       results =  gp.execute(params)
 
       results.should_not be nil
-      results.should have_key :paramName
-      results.should have_key :value
+      results.should have_at_least(1).items
+      results[0].should have_key 'paramName'
+      results[0].should have_key 'value'
 
     end
 
@@ -27,9 +28,10 @@ describe 'GPServer' do
 
       params = { Web_Map_as_JSON: webmap, Format: 'JPG', Layout_Template: 'MAP_ONLY' }
       results = gp.execute(params)
-      results.should have_key('Output_File')
-      results['Output_File'].should have_key("url")
-      results['Output_File']['url'].should match /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6}):?(\d{1,6})*([\/\w \.-]*)*\/?$/
+      results.should have_at_least(1).items
+      results[0].should have_key('paramName')
+      results[0]['value'].should have_key("url")
+      results[0]['value']['url'].should match /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6}):?(\d{1,6})*([\/\w \.-]*)*\/?$/
     end
 
   end
