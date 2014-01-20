@@ -2,6 +2,9 @@
 
 Arcserver.rb is an interface for interacting with ESRI ArcGIS Server  REST APIs from Ruby.
 
+[ArcGIS rest specification](http://www.esri.com/library/whitepapers/pdfs/geoservices-rest-spec.pdf)
+
+
 [![Build Status](https://travis-ci.org/lukefx/arcserver.rb.png?branch=master)](https://travis-ci.org/lukefx/arcserver.rb)
 [![Code Climate](https://codeclimate.com/github/lukefx/arcserver.rb.png)](https://codeclimate.com/github/lukefx/arcserver.rb)
 
@@ -116,7 +119,7 @@ results =  gp.execute(params)
 puts results # => {"paramName"=>"Output", "dataType"=>"GPFeatureRecordSetLayer", "value"=>{"geometryType"=>"esriGeometryPolyline", "spatialReference"=>{"wkid"=>4326}, "features"=>[{"attributes"=>{"FID"=>1, "FNODE_"=>0, "Shape_Length"=>0.19891537566450523}, "geometry"=>{"paths"=>[[[-76.2890625, 35.859375], [-76.09141540527344, 35.88180160522461]]]}}], "exceededTransferLimit"=>false}}
 ```
 
-Example for an asyn service:
+Example for async service:
 
 ```ruby
 gp = ArcServer::GPServer.new("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task")
