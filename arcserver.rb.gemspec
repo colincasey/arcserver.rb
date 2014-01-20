@@ -3,6 +3,19 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'arcserver/version'
 
+module RubyVersion
+  def rbx?
+    defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
+  end
+
+  def jruby?
+    RUBY_PLATFORM =~ /java/
+  end
+end
+
+include RubyVersion
+Gem::Specification.extend RubyVersion
+
 Gem::Specification.new do |s|
   s.name = "arcserver.rb"
   s.version = ArcServer::VERSION
@@ -25,6 +38,7 @@ Gem::Specification.new do |s|
 	s.add_runtime_dependency 'httpclient'
   s.add_runtime_dependency 'json'
   s.add_runtime_dependency 'rufus-scheduler'
+  s.add_runtime_dependency 'rubysl', '~> 2.0' if rbx?
 
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'rake'
