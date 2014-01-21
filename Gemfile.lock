@@ -67,4 +67,5 @@ DEPENDENCIES
   factory_girl
   rake
   rspec
+  rubysl
   sdoc
