@@ -25,7 +25,11 @@ Gem::Specification.new do |s|
 	s.add_runtime_dependency 'httpclient'
   s.add_runtime_dependency 'json'
   s.add_runtime_dependency 'rufus-scheduler'
-  s.add_runtime_dependency 'rubysl', '~> 2.0' if RUBY_ENGINE == 'rbx'
+
+  if RUBY_ENGINE == 'rbx'
+    s.add_development_dependency 'racc'
+    s.add_development_dependency 'rubysl'
+  end
 
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'rake'
