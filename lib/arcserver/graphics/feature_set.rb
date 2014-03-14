@@ -7,14 +7,14 @@ module ArcServer
       attr_accessor :displayFieldName, :geometryType, :fieldAliases, :features
 
       def initialize(attrs={})
-        @fieldAliases = attrs[:fields]
-        @geometryType = attrs[:geometryType] || ""
+        @fieldAliases = attrs[:fields] if attrs[:fields]
+        @geometryType = attrs[:geometryType] if attrs[:geometryType]
 
         if attrs[:features]
           @features = attrs[:features].map { |f| f.is_a?(Feature) ? f : Feature.create(f) }
         end
 
-        self
+        # self
       end
 
       def empty?

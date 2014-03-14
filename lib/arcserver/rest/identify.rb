@@ -18,7 +18,7 @@ module ArcServer
           time: "",
           layerTimeOptions: "",
           layers: "all",
-          tolerance: "",
+          tolerance: "2",
           mapExtent: "",
           imageDisplay: "",
           returnGeometry: true,
@@ -53,8 +53,10 @@ module ArcServer
         @layerName = attrs[:layerName]
         @value = attrs[:value]
         @displayFieldName = attrs[:displayFieldName]
-        @geometryType = attrs[:geometryType]
-        @geometry = ArcServer::Geometry::Geometry.build(attrs[:geometry], @geometryType)
+        if attrs[:geometry]
+          @geometryType = attrs[:geometryType]
+          @geometry = ArcServer::Geometry::Geometry.build(attrs[:geometry], @geometryType)
+        end
         @feature = Graphics::Feature.new({ geometry: @geometry, attributes: attrs[:attributes] })
       end
 
