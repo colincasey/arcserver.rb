@@ -9,7 +9,31 @@ describe 'FeatureServer' do
   it 'adds feature to FeatureServer' do
 
     fs = ArcServer::FeatureServer.new("http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/SanFrancisco/311Incidents/FeatureServer")
-    f = ArcServer::Graphics::Feature.new({ geometry: ArcServer::Geometry::Point.new({ x: 997986.50, y: 5783631.06, spatialReference: { wkid: 102100 }}), attributes: {status:1,req_id:"12345",req_type:"Graffiti Complaint – Private Property",req_date:"30.09.2013",req_time:"14:00",address:"via dei matti 1",district:"Lugano"} })
+
+    # objectid (Type: esriFieldTypeOID, Alias: Object ID, Editable: False)
+    # req_id (Type: esriFieldTypeString, Alias: Request ID, Length: 20, Editable: True)
+    # req_type (Type: esriFieldTypeString, Alias: Request Type, Length: 40, Editable: True)
+    # req_date (Type: esriFieldTypeString, Alias: Request Date, Length: 30, Editable: True)
+    # req_time (Type: esriFieldTypeString, Alias: Request Time, Length: 20, Editable: True)
+    # address (Type: esriFieldTypeString, Alias: Address, Length: 60, Editable: True)
+    # x_coord (Type: esriFieldTypeString, Alias: X Coordinate, Length: 20, Editable: True)
+    # y_coord (Type: esriFieldTypeString, Alias: Y Coordinate, Length: 20, Editable: True)
+    # district (Type: esriFieldTypeString, Alias: District, Length: 20, Editable: True)
+    # status (Type: esriFieldTypeSmallInteger, Alias: Status, Editable: True, Domain: Coded Values: [1: New], [2: Open], [3: Closed])
+
+    attrs = {
+      status:    "1",
+      req_id:    "12345",
+      req_type:  "Graffiti Complaint – Private Property",
+      req_date:  "30.09.2013",
+      req_time:  "14:00",
+      address:   "via dei matti 1",
+      district:  "Lugano"
+    }
+
+    geometry = ArcServer::Geometry::Point.new({ x: 997986.50, y: 5783631.06, spatialReference: { wkid: 102100 }})
+
+    f = ArcServer::Graphics::Feature.new({ geometry: geometry, attributes: attrs })
 
     results = fs.applyEdits('0', [ f ], [ ], [  ])
     results.should have_key(:addResults)
