@@ -31,5 +31,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'sdoc'
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'factory_girl'
+  s.add_development_dependency 'coveralls'
 
 end

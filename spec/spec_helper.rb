@@ -2,6 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 require 'pp'
 require 'factory_girl'
+require 'coveralls'
 
 # require_relative '../lib/arcserver'
 require 'arcserver'
@@ -13,3 +14,4 @@ RSpec.configure do |config|
 end
 
 # FactoryGirl.find_definitions
+Coveralls.wear!
