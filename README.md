@@ -4,14 +4,14 @@ Arcserver.rb is an interface for interacting with ESRI ArcGIS Server  REST APIs 
 
 [ArcGIS rest specification](http://www.esri.com/library/whitepapers/pdfs/geoservices-rest-spec.pdf)
 
-
 [![Build Status](https://travis-ci.org/lukefx/arcserver.rb.png?branch=master)](https://travis-ci.org/lukefx/arcserver.rb)
 [![Code Climate](https://codeclimate.com/github/lukefx/arcserver.rb.png)](https://codeclimate.com/github/lukefx/arcserver.rb)
 [![Coverage Status](https://coveralls.io/repos/lukefx/arcserver.rb/badge.png?branch=master)](https://coveralls.io/r/lukefx/arcserver.rb?branch=master)
 
-[![Coverage Status](https://coveralls.io/repos/lukefx/arcserver.rb/badge.png?branch=master)](https://coveralls.io/r/lukefx/arcserver.rb?branch=master)
 
 ## Installation
+
+From command line
 
     [sudo] gem install arcserver.rb
 
@@ -20,6 +20,8 @@ If you want to use it in with Bundler add to your Gemfile
     gem 'arcserver.rb', '~> 0.1.5'
 
 ## Quick Example
+
+Require the gem
 
 ```ruby
 require 'arcserver'
