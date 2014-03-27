@@ -8,6 +8,8 @@ Arcserver.rb is an interface for interacting with ESRI ArcGIS Server  REST APIs 
 [![Build Status](https://travis-ci.org/lukefx/arcserver.rb.png?branch=master)](https://travis-ci.org/lukefx/arcserver.rb)
 [![Code Climate](https://codeclimate.com/github/lukefx/arcserver.rb.png)](https://codeclimate.com/github/lukefx/arcserver.rb)
 
+[![Coverage Status](https://coveralls.io/repos/lukefx/arcserver.rb/badge.png?branch=master)](https://coveralls.io/r/lukefx/arcserver.rb?branch=master)
+
 ## Installation
 
     [sudo] gem install arcserver.rb
