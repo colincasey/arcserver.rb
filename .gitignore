@@ -2,7 +2,10 @@
 .DS_Store
 coverage
 rdoc
+doc
 .yardoc
 doc
 pkg
 nbproject
+.idea
+.bundle
