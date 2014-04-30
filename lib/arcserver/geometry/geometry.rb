@@ -3,8 +3,6 @@ module ArcServer
 
     class Geometry < OpenStruct
 
-      attr_accessor :spatialReference
-
       def self.build(geometry, geometryType)
         klass = {
             esriGeometryPoint:      ArcServer::Geometry::Point,
@@ -16,20 +14,20 @@ module ArcServer
         klass.new(geometry) rescue nil
       end
 
-      def self.create(json)
+      def self.create(geometry)
 
-        parsed = json.is_a?(Hash) ? json : JSON.parse(json) rescue {}
+        parsed_geometry = geometry.is_a?(Hash) ? geometry.with_indifferent_access : JSON.parse(geometry).with_indifferent_access rescue {}
 
-        if parsed['x']
-          ArcServer::Geometry::Point.new(parsed)
-        elsif  parsed['paths']
-          ArcServer::Geometry::Polyline.new(parsed)
-        elsif parsed['rings']
-          ArcServer::Geometry::Polygon.new(parsed)
-        elsif parsed['points']
-          ArcServer::Geometry::Multipoint.new(parsed)
-        elsif parsed['ymax']
-          ArcServer::Geometry::Envelope.new(parsed)
+        if parsed_geometry[:x]
+          ArcServer::Geometry::Point.new(parsed_geometry)
+        elsif  parsed_geometry[:paths]
+          ArcServer::Geometry::Polyline.new(parsed_geometry)
+        elsif parsed_geometry[:rings]
+          ArcServer::Geometry::Polygon.new(parsed_geometry)
+        elsif parsed_geometry[:points]
+          ArcServer::Geometry::Multipoint.new(parsed_geometry)
+        elsif parsed_geometry[:ymax]
+          ArcServer::Geometry::Envelope.new(parsed_geometry)
         else
           nil
         end

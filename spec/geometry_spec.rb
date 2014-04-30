@@ -9,13 +9,13 @@ describe 'Geometry' do
   it 'creates feature with Geometry class' do
 
     fs = ArcServer::FeatureServer.new("http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/SanFrancisco/311Incidents/FeatureServer")
-    f = query_for_random_feature
-    f.geometry.should be_kind_of(ArcServer::Geometry::Point)
+    feature = query_for_random_feature
+    feature.geometry.should be_kind_of(ArcServer::Geometry::Point)
 
-    g = f.geometry
-    g.should respond_to(:extent)
-    g.should respond_to(:x)
-    g.should respond_to(:y)
+    g = feature.geometry
+    g.should respond_to :extent
+    g.should respond_to :x
+    g.should respond_to :y
 
   end
 
@@ -24,9 +24,14 @@ describe 'Geometry' do
     geometry = ArcServer::Geometry::Geometry.create json_geometry
     geometry.should be_kind_of(ArcServer::Geometry::Point)
 
-    json_geometry = '{ "x" : -118.15, "y" : 33.80, "spatialReference" : {"wkid" : 4326} }'
+    json_geometry = '{"x" : -118.15, "y" : 33.80, "spatialReference" : {"wkid" : 4326}}'
     geometry = ArcServer::Geometry::Geometry.create json_geometry
     geometry.should be_kind_of(ArcServer::Geometry::Point)
+
+    geometry.x.should eq -118.15
+    geometry.y.should eq 33.80
+    geometry.spatialReference.should_not be_nil
+    geometry.spatialReference.wkid.should eq 4326
 
   end
 
