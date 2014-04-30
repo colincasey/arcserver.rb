@@ -17,7 +17,7 @@ describe 'Serialize' do
     }
 
     geometry = { x: 1, y: 2 }
-    f = ArcServer::Graphics::Feature.new({ geometry: geometry, attributes: attrs })
+    f = ArcServer::Graphics::Feature.new(geometry: geometry, attributes: attrs)
 
     json = f.to_json
     json.should include "\"geometry\":{\"x\":1,\"y\":2}"
@@ -30,7 +30,7 @@ describe 'Serialize' do
     geometry = ArcServer::Geometry::Geometry.create( x: 997986.50, y: 5783631.06, spatialReference: { wkid: 102100 } )
     geometry.geometryType.should eq 'esriGeometryPoint'
 
-    f = ArcServer::Graphics::Feature.new( geometry: geometry, attributes: {} )
+    f = ArcServer::Graphics::Feature.new(geometry: geometry, attributes: {})
     json = f.to_json
     json.should include "\"geometry\":{\"x\":997986.5,\"y\":5783631.06,\"spatialReference\":{\"wkid\":102100}}"
 
@@ -42,7 +42,7 @@ describe 'Serialize' do
     geometry = ArcServer::Geometry::Geometry.create(json)
     geometry.geometryType.should eq 'esriGeometryMultipoint'
 
-    f = ArcServer::Graphics::Feature.new( geometry: geometry, attributes: {} )
+    f = ArcServer::Graphics::Feature.new(geometry: geometry, attributes: {})
     json = f.to_json
     json.should include "\"geometry\":{\"points\":[[-97.06138,32.837,35.0]"
 
@@ -54,7 +54,7 @@ describe 'Serialize' do
     geometry = ArcServer::Geometry::Geometry.create(json)
     geometry.geometryType.should eq 'esriGeometryPolyline'
 
-    f = ArcServer::Graphics::Feature.new( geometry: geometry, attributes: {} )
+    f = ArcServer::Graphics::Feature.new(geometry: geometry, attributes: {})
     json = f.to_json
     json.should include "\"geometry\":{\"paths\":[[[-97.06138,32.837],[-97.06133,32.836]"
 
@@ -64,7 +64,7 @@ describe 'Serialize' do
 
     geometry = ArcServer::Geometry::Geometry.create('{"rings" : [[[-97.06138,32.837],[-97.06133,32.836],[-97.06124,32.834],[-97.06127,32.832],[-97.06138,32.837]],[[-97.06326,32.759],[-97.06298,32.755],[-97.06153,32.749],[-97.06326,32.759]]],"spatialReference" : {"wkid" : 4326}}')
     geometry.geometryType.should eq 'esriGeometryPolygon'
-    f = ArcServer::Graphics::Feature.new( geometry: geometry, attributes: {} )
+    f = ArcServer::Graphics::Feature.new(geometry: geometry, attributes: {})
     json = f.to_json
     json.should include "\"geometry\":{\"rings\""
     json.should include "[[[-97.06138,32.837],[-97.06133,32.836]"
@@ -77,7 +77,7 @@ describe 'Serialize' do
     geometry = ArcServer::Geometry::Geometry.create(json)
     geometry.geometryType.should eq 'esriGeometryEnvelope'
 
-    f = ArcServer::Graphics::Feature.new( geometry: geometry, attributes: {} )
+    f = ArcServer::Graphics::Feature.new(geometry: geometry, attributes: {})
     json = f.to_json
     json.should include "\"xmin\":-109.55,\"ymin\":25.76,\"xmax\":-86.39,\"ymax\":49.94,\"spatialReference\":{\"wkid\":4326}}"
 
